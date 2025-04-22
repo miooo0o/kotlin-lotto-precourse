@@ -1,39 +1,69 @@
 # Lotto
+
+Lotto is a simple command-line application that simulates a lottery ticket system. Users can purchase tickets, check
+them against winning numbers, and calculate their winnings.
+
 ## Architecture
-### Flows
+
+### Application Flow
+
 ```
 Input(object) → Validator(object or inline) → Logic(class) → Output(object)
 ```
-### Check List
+
+### Class Structure
+
+- **Lotto**: Core domain class representing a lottery ticket
+- **LottoPolicy**: Contains constants and validation rules for the lottery domain
+- **Validator**: Handles input validation logic
+- **InputView/OutputView**: Manage user interaction (input/output)
+- **Application**: Entry point containing the main function
+
+## Development Approach
+
+I'm trying my best to learn and practice TDD with this project!
+
+## Implementation Checklist
+
 - [ ] Keep functions under 10 lines to ensure they perform a single responsibility
 - [ ] Avoid using `else`
 - [ ] Use `Enum` classes where applicable
 - [ ] Implement unit tests for all logic, except for UI interactions
-- [ ] must use the Randoms and Console APIs provided by the `camp.nextstep.edu.missionutils package`
-  - To generate random values, use `Randoms.pickUniqueNumbersInRange()` from `camp.nextstep.edu.missionutils.Randoms`.
-  - example: `Randoms.pickUniqueNumbersInRange(1, 45, 6)`
-  - To receive user input, use `Console.readLine()` from `camp.nextstep.edu.missionutils.Console`.
-- [ ] If the user inputs invalid data, the program must throw an `IllegalArgumentException` and re-prompt input from that step. 
-- [ ] Handle *only* specific exception types such as `IllegalArgumentException` or `IllegalStateException`, not generic Exception.
+- [ ] Use the Randoms and Console APIs provided by the `camp.nextstep.edu.missionutils package`
+    - To generate random values, use `Randoms.pickUniqueNumbersInRange()` from `camp.nextstep.edu.missionutils.Randoms`.
+    - Example: `Randoms.pickUniqueNumbersInRange(1, 45, 6)`
+    - To receive user input, use `Console.readLine()` from `camp.nextstep.edu.missionutils.Console`.
+- [ ] If the user inputs invalid data, the program must throw an `IllegalArgumentException` and re-prompt input from
+  that step.
+- [ ] Handle *only* specific exception types such as `IllegalArgumentException` or `IllegalStateException`, not generic
+  Exception.
 
 ---
 
 ## Feature List
 
 ### Input Processing
+
 - [ ] Accept purchase amount
-- [ ] Validate purchase amount (must be divisible by 1,000)
 - [ ] Accept winning numbers (6 unique numbers)
 - [ ] Accept bonus number
-- [ ] Validate numbers are within range (1-45)
+
+### Validation
+
+- [x] Validate purchase amount (must be divisible by 1,000)
+- [x] Validate numbers are within range (1-45)
+- [x] Validate numbers have no duplicates
+- [x] Validate bonus number is not among winning numbers
 
 ### Lotto Generation
+
 - [ ] Generate lotto tickets based on purchase amount
 - [ ] Create random numbers for each ticket
 - [ ] Sort lotto numbers in ascending order
 - [ ] Display purchased tickets
 
 ### Winner Calculation
+
 - [ ] Compare each ticket with winning numbers
 - [ ] Determine match count for each ticket
 - [ ] Check for bonus number match
@@ -45,23 +75,37 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
     - 5th: 3 matches
 
 ### Result Output
+
 - [ ] Display winning statistics
 - [ ] Calculate total return rate
 - [ ] Format return rate to one decimal place
 
 ### Exception Handling
-- [ ] Create Exception class
-- [ ] Handle invalid purchase amount
-- [ ] Handle invalid number range
-- [ ] Handle duplicate numbers
-- [ ] Handle incorrect number count
 
-### Error Handling
-- [ ] Error messages must start with `[ERROR]:`
+- [x] Handle invalid purchase amount
+- [x] Handle invalid number range
+- [x] Handle duplicate numbers
+- [x] Handle incorrect number count
+- [ ] Display error messages with `[ERROR]:` prefix
+
+## Test Progress
+
+### Completed Tests
+
+- [x] Validator tests for purchase amount validation
+- [x] Validator tests for lottery number validation
+- [x] Validator tests for bonus number validation
+
+### Planned Tests
+
+- [ ] Lotto ticket generation tests
+- [ ] Match calculation tests
+- [ ] Prize calculation tests
 
 ---
 
 ## Example Execution
+
 ```
 Please enter the purchase amount.
 8000
