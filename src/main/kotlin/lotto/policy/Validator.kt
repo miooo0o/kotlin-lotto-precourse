@@ -12,7 +12,7 @@ object Validator {
 		bonus in LottoPolicy.VALID_NUMBER_RANGE && bonus !in winning
 
 	fun isValidPurchaseAmount(amount: Long): Boolean =
-		amount / LottoPolicy.TICKET_PRICE > 0 && amount % LottoPolicy.TICKET_PRICE == 0L
+		LottoPolicy.isPurchasable(amount)
 
 	private fun isCorrectSize(numbers: List<Int>): Boolean =
 		numbers.size == LottoPolicy.LOTTO_SIZE
