@@ -3,7 +3,7 @@ package lotto.error
 import lotto.policy.GamePolicy
 
 object ErrorFormatter {
-	fun of(type: LottoErrorType): String = when (type) {
+	fun of(type: ErrorType): String = when (type) {
 		is Winning -> fromWinning(type)
 		is Bonus -> fromBonus(type)
 		is Purchase -> fromPurchase(type)
