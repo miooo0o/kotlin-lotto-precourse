@@ -39,7 +39,7 @@ class LottoErrorTest {
 		val error = LottoErrorMessage.of(Bonus.NOT_IN_RANGE)
 		assertThat(error)
 			.contains("must be between")
-			.contains("Bonus number")
+			.contains("bonus number")
 	}
 
 	@Test
