@@ -16,7 +16,7 @@ object LottoPolicy {
 		amount % TICKET_PRICE == 0L
 
 	fun isPurchasable(amount: Long): Boolean =
-		amount >= TICKET_PRICE && isDivisibleByTicketPrice(amount)
+		amount >= TICKET_PRICE
 
 	// Lotto Rules
 	const val LOTTO_SIZE = 6
