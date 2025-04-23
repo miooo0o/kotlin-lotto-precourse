@@ -64,19 +64,20 @@ class ValidatorTest {
 	}
 
 	@Test
-	fun `returns false when bonus number is duplicated in winning numbers`() {
+	fun `throws exception when bonus number is duplicated in winning numbers`() {
 		val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
 		val duplicateBonus = 1
-		val result = Validator.isValidBonusNumber(duplicateBonus, winningNumbers)
-		assertThat(result).isFalse()
+		val exception = assertThrows<IllegalArgumentException> {
+			Validator.isValidBonusNumber(duplicateBonus, winningNumbers)
+		}
+		assertThat(exception.message)
 	}
 
 	@Test
-	fun `returns true when bonus number is in valid range and not duplicated`() {
+	fun `pass when bonus number is in valid range and not duplicated`() {
 		val winningNumbers = listOf(1, 2, 3, 4, 5, 6)
 		val bonus = 7
-		val result = Validator.isValidBonusNumber(bonus, winningNumbers)
-		assertThat(result).isTrue()
+		Validator.isValidBonusNumber(bonus, winningNumbers)
 	}
 
 	@Test
