@@ -7,7 +7,7 @@ package lotto.policy
  * used throughout the application, particularly during input
  * validation and unit testing.
  */
-object LottoPolicy {
+object GamePolicy {
 
 	// Ticket Rules
 	const val TICKET_PRICE = 1000
