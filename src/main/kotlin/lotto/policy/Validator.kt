@@ -1,38 +1,42 @@
 package lotto.policy
 
+import lotto.error.Bonus
+import lotto.error.LottoErrorType
+import lotto.error.Purchase
+import lotto.error.Winning
+
 object Validator {
+	fun isValidWinningNumbers(winning: List<Int>): LottoErrorType? =
+		checkWinningSize(winning)
+			?: checkWinningUniqueness(winning)
+			?: checkWinningRange(winning)
 
-	fun isValidLottoNumbers(numbers: List<Int>) {
-		require(isCorrectSize(numbers)) { "[ERROR]: Lotto numbers must contain exactly ${LottoPolicy.LOTTO_SIZE} numbers. (given: ${numbers.size})" }
-		require(hasNoDuplicates(numbers)) { "[ERROR]: Duplicate numbers are not allowed." }
-		require(isInValidRange(numbers)) { "[ERROR]: All numbers must be between ${LottoPolicy.LOTTO_MIN_NUMBER} and ${LottoPolicy.LOTTO_MAX_NUMBER}." }
-	}
+	fun isValidBonusNumber(bonus: Int, winning: List<Int>): LottoErrorType? =
+		checkBonusRange(bonus)
+			?: checkBonusNotInWinning(bonus, winning)
 
-	fun isValidBonusNumber(bonus: Int, winning: List<Int>) {
-		require(isInValidRange(bonus)) { "[ERROR]: Bonus number must be between ${LottoPolicy.LOTTO_MIN_NUMBER} and ${LottoPolicy.LOTTO_MAX_NUMBER}. (given: $bonus)" }
-		require(
-			isBonusNotDuplicated(
-				bonus,
-				winning
-			)
-		) { "[ERROR]: Bonus number must not be one of the winning numbers. (given: $bonus)" }
-	}
+	fun isValidAmount(amount: Long): LottoErrorType? =
+		checkPurchasable(amount)
+			?: checkAmountDivisible(amount)
 
-	fun isValidPurchaseAmount(amount: Long): Boolean =
-		LottoPolicy.isPurchasable(amount)
+	fun checkWinningSize(numbers: List<Int>): LottoErrorType? =
+		if (numbers.size != LottoPolicy.LOTTO_SIZE) Winning.INVALID_SIZE else null
 
-	private fun isCorrectSize(numbers: List<Int>): Boolean =
-		numbers.size == LottoPolicy.LOTTO_SIZE
+	private fun checkWinningUniqueness(numbers: List<Int>): LottoErrorType? =
+		if (numbers.distinct().size != LottoPolicy.LOTTO_SIZE) Winning.DUPLICATE_NUMBER else null
 
-	private fun hasNoDuplicates(numbers: List<Int>): Boolean =
-		numbers.distinct().size == LottoPolicy.LOTTO_SIZE
+	private fun checkWinningRange(numbers: List<Int>): LottoErrorType? =
+		if (numbers.any { it !in LottoPolicy.VALID_NUMBER_RANGE }) Winning.NOT_IN_RANGE else null
 
-	private fun isInValidRange(numbers: List<Int>): Boolean =
-		numbers.all { it in LottoPolicy.VALID_NUMBER_RANGE }
+	private fun checkBonusRange(bonus: Int): LottoErrorType? =
+		if (bonus !in LottoPolicy.VALID_NUMBER_RANGE) Bonus.NOT_IN_RANGE else null
 
-	private fun isInValidRange(bonus: Int): Boolean =
-		bonus in LottoPolicy.VALID_NUMBER_RANGE
+	private fun checkBonusNotInWinning(bonus: Int, winning: List<Int>): LottoErrorType? =
+		if (bonus in winning) Bonus.DUPLICATE_NUMBER else null
 
-	private fun isBonusNotDuplicated(bonus: Int, winning: List<Int>): Boolean =
-		bonus !in winning
+	private fun checkAmountDivisible(amount: Long): LottoErrorType? =
+		if (!LottoPolicy.isDivisibleByTicketPrice(amount)) Purchase.NOT_DIVISIBLE_BY_TICKET_PRICE else null
+
+	private fun checkPurchasable(amount: Long): LottoErrorType? =
+		if (!LottoPolicy.isPurchasable(amount)) Purchase.INVALID_PURCHASE_AMOUNT else null
 }
