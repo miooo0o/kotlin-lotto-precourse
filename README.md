@@ -3,6 +3,36 @@
 Lotto is a simple command-line application that simulates a lottery ticket system. Users can purchase tickets, check
 them against winning numbers, and calculate their winnings.
 
+## Implementation Requirements
+
+| Requirement        | Description                                                                                                                 |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Code Style         | Keep functions under 10 lines to ensure they perform a single responsibility                                                |
+| Control Flow       | Avoid using `else`                                                                                                          |
+| Design Patterns    | Use `Enum` classes where applicable                                                                                         |
+| Testing            | Implement unit tests for all logic, except for UI interactions                                                              |
+| External APIs      | Use the Randoms and Console APIs provided by the `camp.nextstep.edu.missionutils package`                                   |
+| Exception Handling | If the user inputs invalid data, the program must throw an `IllegalArgumentException` and re-prompt input from that step    |
+| Exception Types    | Handle *only* specific exception types such as `IllegalArgumentException` or `IllegalStateException`, not generic Exception |
+
+### Random Number Generation
+
+To generate random values, use `Randoms.pickUniqueNumbersInRange()` from `camp.nextstep.edu.missionutils.Randoms`.
+
+Example:
+
+```kotlin
+Randoms.pickUniqueNumbersInRange(1, 45, 6)
+```
+
+### User Input
+
+To receive user input, use `Console.readLine()` from `camp.nextstep.edu.missionutils.Console`.
+
+## Development Approach
+
+> I'm trying my best to learn and practice TDD with this project!
+
 ## Architecture
 
 ### Application Flow
@@ -19,27 +49,6 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
 - **InputView/OutputView**: Manage user interaction (input/output)
 - **Application**: Entry point containing the main function
 
-## Development Approach
-
-I'm trying my best to learn and practice TDD with this project!
-
-## Implementation Checklist
-
-- [ ] Keep functions under 10 lines to ensure they perform a single responsibility
-- [ ] Avoid using `else`
-- [ ] Use `Enum` classes where applicable
-- [ ] Implement unit tests for all logic, except for UI interactions
-- [ ] Use the Randoms and Console APIs provided by the `camp.nextstep.edu.missionutils package`
-    - To generate random values, use `Randoms.pickUniqueNumbersInRange()` from `camp.nextstep.edu.missionutils.Randoms`.
-    - Example: `Randoms.pickUniqueNumbersInRange(1, 45, 6)`
-    - To receive user input, use `Console.readLine()` from `camp.nextstep.edu.missionutils.Console`.
-- [ ] If the user inputs invalid data, the program must throw an `IllegalArgumentException` and re-prompt input from
-  that step.
-- [ ] Handle *only* specific exception types such as `IllegalArgumentException` or `IllegalStateException`, not generic
-  Exception.
-
----
-
 ## Feature List
 
 ### Input Processing
@@ -54,6 +63,25 @@ I'm trying my best to learn and practice TDD with this project!
 - [x] Validate numbers are within range (1-45)
 - [x] Validate numbers have no duplicates
 - [x] Validate bonus number is not among winning numbers
+- [ ] Move logic functions out of `LottoPolicy` into `Validator`
+- [ ] Remove `fun` definitions from `LottoPolicy` entirely
+- [ ] Create error → message mapper for consistent `[ERROR]: ...` output
+
+### Error Handling
+
+- [x]
+
+### Exception Handling
+
+- [x] Handle invalid purchase amount
+- [x] Handle invalid number range
+- [x] Handle duplicate numbers
+- [x] Handle incorrect number count
+- [x] Display error messages with `[ERROR]:` prefix
+- [ ] Add error validation to `InputView` and loop on invalid input
+- [ ] Integrate error handling in full application flow (input → validate → retry)
+- [ ] Manage retry loops in controller components
+- [ ] Use try-catch blocks to catch exceptions and guide user through input correction
 
 ### Lotto Generation
 
@@ -80,13 +108,24 @@ I'm trying my best to learn and practice TDD with this project!
 - [ ] Calculate total return rate
 - [ ] Format return rate to one decimal place
 
-### Exception Handling
+## Exception Strategy
 
-- [x] Handle invalid purchase amount
-- [x] Handle invalid number range
-- [x] Handle duplicate numbers
-- [x] Handle incorrect number count
-- [ ] Display error messages with `[ERROR]:` prefix
+The application will use two primary exception types as required:
+
+- IllegalArgumentException: For input validation failures (invalid numbers, formats, etc.)
+- IllegalStateException: For application state-related errors (if any occur)
+
+The LottoError class will be responsible for:
+
+1. Connecting LottoErrorType with the appropriate exception type
+2. Generating properly formatted error messages
+3. Throwing the correct exception with consistent messaging
+
+Input retry logic will be managed in the controller layer, which will:
+
+1. Catch specific exceptions
+2. Display appropriate error messages
+3. Allow users to retry input from the failed step
 
 ## Test Progress
 
@@ -95,9 +134,11 @@ I'm trying my best to learn and practice TDD with this project!
 - [x] Validator tests for purchase amount validation
 - [x] Validator tests for lottery number validation
 - [x] Validator tests for bonus number validation
+- [x] Error message generation tests
 
 ### Planned Tests
 
+- [ ] Exception handling tests with retry scenarios
 - [ ] Lotto ticket generation tests
 - [ ] Match calculation tests
 - [ ] Prize calculation tests
