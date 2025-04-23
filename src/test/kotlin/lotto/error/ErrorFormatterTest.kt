@@ -4,7 +4,7 @@ import lotto.policy.GamePolicy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class LottoErrorMessageTest {
+class ErrorFormatterTest {
 
 	// winning numbers
 
