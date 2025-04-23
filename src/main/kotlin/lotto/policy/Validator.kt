@@ -4,7 +4,7 @@ import lotto.error.Bonus
 import lotto.error.LottoErrorType
 import lotto.error.Purchase
 import lotto.error.Winning
-import lotto.policy.LottoPolicy.TICKET_PRICE
+import lotto.policy.GamePolicy.TICKET_PRICE
 
 object Validator {
 	fun isValidWinningNumbers(winning: List<Int>): LottoErrorType? =
@@ -21,16 +21,16 @@ object Validator {
 			?: checkAmountDivisible(amount)
 
 	fun checkWinningSize(numbers: List<Int>): LottoErrorType? =
-		Winning.INVALID_SIZE.takeIf { numbers.size != LottoPolicy.LOTTO_SIZE }
+		Winning.INVALID_SIZE.takeIf { numbers.size != GamePolicy.LOTTO_SIZE }
 
 	private fun checkWinningUniqueness(numbers: List<Int>): LottoErrorType? =
-		Winning.DUPLICATE_NUMBER.takeIf { numbers.distinct().size != LottoPolicy.LOTTO_SIZE }
+		Winning.DUPLICATE_NUMBER.takeIf { numbers.distinct().size != GamePolicy.LOTTO_SIZE }
 
 	private fun checkWinningRange(numbers: List<Int>): LottoErrorType? =
-		Winning.NOT_IN_RANGE.takeIf { numbers.any { it !in LottoPolicy.VALID_NUMBER_RANGE } }
+		Winning.NOT_IN_RANGE.takeIf { numbers.any { it !in GamePolicy.VALID_NUMBER_RANGE } }
 
 	private fun checkBonusRange(bonus: Int): LottoErrorType? =
-		Bonus.NOT_IN_RANGE.takeIf { bonus !in LottoPolicy.VALID_NUMBER_RANGE }
+		Bonus.NOT_IN_RANGE.takeIf { bonus !in GamePolicy.VALID_NUMBER_RANGE }
 
 	private fun checkBonusNotInWinning(bonus: Int, winning: List<Int>): LottoErrorType? =
 		Bonus.DUPLICATE_NUMBER.takeIf { bonus in winning }
