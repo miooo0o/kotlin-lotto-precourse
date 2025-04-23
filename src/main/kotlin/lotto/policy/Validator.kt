@@ -4,6 +4,7 @@ import lotto.error.Bonus
 import lotto.error.LottoErrorType
 import lotto.error.Purchase
 import lotto.error.Winning
+import lotto.policy.LottoPolicy.TICKET_PRICE
 
 object Validator {
 	fun isValidWinningNumbers(winning: List<Int>): LottoErrorType? =
@@ -35,8 +36,12 @@ object Validator {
 		if (bonus in winning) Bonus.DUPLICATE_NUMBER else null
 
 	private fun checkAmountDivisible(amount: Long): LottoErrorType? =
-		if (!LottoPolicy.isDivisibleByTicketPrice(amount)) Purchase.NOT_DIVISIBLE_BY_TICKET_PRICE else null
+		if (!isDivisibleByTicketPrice(amount)) Purchase.NOT_DIVISIBLE_BY_TICKET_PRICE else null
 
 	private fun checkPurchasable(amount: Long): LottoErrorType? =
-		if (!LottoPolicy.isPurchasable(amount)) Purchase.INVALID_PURCHASE_AMOUNT else null
+		if (!isPurchasable(amount)) Purchase.INVALID_PURCHASE_AMOUNT else null
+
+	private fun isDivisibleByTicketPrice(amount: Long) = amount % TICKET_PRICE == 0L
+	private fun isPurchasable(amount: Long) = amount >= TICKET_PRICE
+
 }

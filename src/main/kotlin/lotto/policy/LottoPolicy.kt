@@ -12,12 +12,6 @@ object LottoPolicy {
 	// Ticket Rules
 	const val TICKET_PRICE = 1000
 
-	fun isDivisibleByTicketPrice(amount: Long): Boolean =
-		amount % TICKET_PRICE == 0L
-
-	fun isPurchasable(amount: Long): Boolean =
-		amount >= TICKET_PRICE
-
 	// Lotto Rules
 	const val LOTTO_SIZE = 6
 
