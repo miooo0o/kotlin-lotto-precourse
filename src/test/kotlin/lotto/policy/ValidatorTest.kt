@@ -56,7 +56,7 @@ class ValidatorTest {
 		val errorType = Validator.isValidBonusNumber(bonus, winning)
 		assertThat(errorType).isEqualTo(Bonus.DUPLICATE_NUMBER)
 	}
-	
+
 	@Test
 	fun `returns NOT_IN_RANGE error when bonus number is not in range`() {
 		val winning = listOf(1, 2, 3, 4, 5, 6)
@@ -77,14 +77,14 @@ class ValidatorTest {
 
 	@Test
 	fun `should return NOT_DIVISIBLE_BY_TICKET_PRICE error when amount is not multiple of ticket price`() {
-		val amountNotDivisibleByTicketPrice = LottoPolicy.TICKET_PRICE * 123 + 1L
+		val amountNotDivisibleByTicketPrice = GamePolicy.TICKET_PRICE * 123 + 1L
 		val errorType = Validator.isValidAmount(amountNotDivisibleByTicketPrice)
 		assertThat(errorType).isEqualTo(Purchase.NOT_DIVISIBLE_BY_TICKET_PRICE)
 	}
 
 	@Test
 	fun `should return INVALID_PURCHASE_AMOUNT error when amount is not multiple of ticket price`() {
-		val amountNotPurchase = LottoPolicy.TICKET_PRICE - 42L
+		val amountNotPurchase = GamePolicy.TICKET_PRICE - 42L
 		val errorType = Validator.isValidAmount(amountNotPurchase)
 		assertThat(errorType).isEqualTo(Purchase.INVALID_PURCHASE_AMOUNT)
 	}
