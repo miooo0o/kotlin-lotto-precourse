@@ -4,7 +4,7 @@ import lotto.error.*
 import lotto.policy.GamePolicy
 
 object Validator {
-	fun isValidWinningNumbers(winning: List<Int>): ErrorType {
+	fun checkWinningNumbers(winning: List<Int>): ErrorType {
 		val sizeError = checkWinningSize(winning)
 		if (sizeError.isStatusFailure()) return sizeError
 
@@ -17,7 +17,7 @@ object Validator {
 		return Common.NON_ERROR
 	}
 
-	fun isValidBonusNumber(bonus: Int, winning: List<Int>): ErrorType {
+	fun checkBonusNumber(bonus: Int, winning: List<Int>): ErrorType {
 		val rangeError = checkBonusRange(bonus)
 		if (rangeError.isStatusFailure()) return rangeError
 
@@ -27,34 +27,44 @@ object Validator {
 		return Common.NON_ERROR
 	}
 
-	fun isValidAmount(amount: Long): ErrorType {
+	fun checkAmount(amount: Long): ErrorType {
 		val purchasableError = checkPurchasableAmount(amount)
 		if (purchasableError.isStatusFailure()) return purchasableError
 		return checkAmountDivisible(amount)
 	}
 
+	fun checkLongValue(num: Long?): ErrorType =
+		ParseError.INVALID_RANGE.takeIf { num != null } ?: Common.NON_ERROR
+
+	fun checkDigit(input: String): ErrorType =
+		ParseError.INVALID_NUMBER_FORMAT.takeIf { input.all { it.isDigit() } } ?: Common.NON_ERROR
+
+	fun checkAllDigit(winningList: List<String>): ErrorType =
+		ParseError.INVALID_NUMBER_FORMAT.takeIf { winningList.all { checkDigit(it) == Common.NON_ERROR } }
+			?: Common.NON_ERROR
+
 	fun checkWinningSize(numbers: List<Int>): ErrorType =
-		Winning.INVALID_SIZE.takeIf { numbers.size != GamePolicy.LOTTO_SIZE } ?: Common.NON_ERROR
+		WinningError.INVALID_SIZE.takeIf { numbers.size != GamePolicy.LOTTO_SIZE } ?: Common.NON_ERROR
 
 	private fun checkWinningUniqueness(numbers: List<Int>): ErrorType =
-		Winning.DUPLICATE_NUMBER.takeIf { numbers.distinct().size != GamePolicy.LOTTO_SIZE } ?: Common.NON_ERROR
+		WinningError.DUPLICATE_NUMBER.takeIf { numbers.distinct().size != GamePolicy.LOTTO_SIZE } ?: Common.NON_ERROR
 
 	private fun checkWinningRange(numbers: List<Int>): ErrorType =
-		Winning.NOT_IN_RANGE.takeIf { numbers.any { it !in GamePolicy.VALID_NUMBER_RANGE } } ?: Common.NON_ERROR
+		WinningError.NOT_IN_RANGE.takeIf { numbers.any { it !in GamePolicy.VALID_NUMBER_RANGE } } ?: Common.NON_ERROR
 
 	private fun checkBonusRange(bonus: Int): ErrorType =
-		Bonus.NOT_IN_RANGE.takeIf { bonus !in GamePolicy.VALID_NUMBER_RANGE } ?: Common.NON_ERROR
+		BonusError.NOT_IN_RANGE.takeIf { bonus !in GamePolicy.VALID_NUMBER_RANGE } ?: Common.NON_ERROR
 
 	private fun checkBonusNotInWinning(bonus: Int, winning: List<Int>): ErrorType =
-		Bonus.DUPLICATE_NUMBER.takeIf { bonus in winning } ?: Common.NON_ERROR
+		BonusError.DUPLICATE_NUMBER.takeIf { bonus in winning } ?: Common.NON_ERROR
 
 	private fun checkAmountDivisible(amount: Long): ErrorType =
-		Purchase.NOT_DIVISIBLE_BY_TICKET_PRICE.takeIf { !isDivisibleByTicketPrice(amount) } ?: Common.NON_ERROR
+		PurchaseError.NOT_DIVISIBLE_BY_TICKET_PRICE.takeIf { !isDivisibleByTicketPrice(amount) } ?: Common.NON_ERROR
 
 	private fun checkPurchasableAmount(amount: Long): ErrorType =
-		Purchase.INVALID_PURCHASE_AMOUNT.takeIf { !isPurchasable(amount) } ?: Common.NON_ERROR
+		PurchaseError.CANNOT_AFFORD_TICKET.takeIf { !isAfford(amount) } ?: Common.NON_ERROR
 
 	private fun isDivisibleByTicketPrice(amount: Long) = amount % GamePolicy.TICKET_PRICE == 0L
-	private fun isPurchasable(amount: Long) = amount >= GamePolicy.TICKET_PRICE
+	private fun isAfford(amount: Long) = amount >= GamePolicy.TICKET_PRICE
 
 }
