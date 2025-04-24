@@ -2,6 +2,10 @@ package lotto.error
 
 sealed interface ErrorType
 
+enum class Common : ErrorType {
+	NON_ERROR
+}
+
 enum class Winning : ErrorType {
 	INVALID_SIZE,
 	NOT_IN_RANGE,
@@ -16,4 +20,8 @@ enum class Bonus : ErrorType {
 enum class Purchase : ErrorType {
 	INVALID_PURCHASE_AMOUNT,
 	NOT_DIVISIBLE_BY_TICKET_PRICE
+}
+
+enum class Logic : ErrorType {
+	DEFAULT
 }

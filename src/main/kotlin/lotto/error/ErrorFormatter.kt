@@ -4,9 +4,11 @@ import lotto.policy.GamePolicy
 
 object ErrorFormatter {
 	fun of(type: ErrorType): String = when (type) {
+		is Common -> "no error"                 // TODO: better message
 		is Winning -> fromWinning(type)
 		is Bonus -> fromBonus(type)
 		is Purchase -> fromPurchase(type)
+		is Logic -> "I am wainting for my time!" // TODO: use this enum?
 	}
 
 	private fun fromWinning(type: Winning): String = when (type) {
