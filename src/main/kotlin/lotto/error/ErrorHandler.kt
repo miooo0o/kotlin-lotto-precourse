@@ -20,6 +20,6 @@ fun ErrorType.isTypeRetry(): Boolean =
 fun ErrorType.isTypeLogic(): Boolean =
 	this is Logic
 
-fun ErrorType?.isStatusSuccess(): Boolean = this == null
+fun ErrorType.isStatusSuccess(): Boolean = this == Common.NON_ERROR
 
-fun ErrorType?.isStatusFailure(): Boolean = this != null
+fun ErrorType.isStatusFailure(): Boolean = this != Common.NON_ERROR
