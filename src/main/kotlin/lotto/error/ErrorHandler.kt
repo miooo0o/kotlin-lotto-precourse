@@ -7,7 +7,7 @@ class LogicError(message: String) : IllegalStateException(message) {
 }
 
 object ErrorHandler {
-	fun check(errorType: ErrorType) {
+	fun throwIf(errorType: ErrorType) {
 		if (errorType == Common.NON_ERROR) return
 		if (errorType.isTypeRetry()) throw RetryInputException(ErrorFormatter.of(errorType))
 		if (errorType.isTypeLogic()) throw LogicError("error handler -> ${errorType::class.simpleName}") // TODO: better message

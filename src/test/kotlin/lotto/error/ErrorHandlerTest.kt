@@ -10,7 +10,7 @@ class ErrorHandlerTest {
 	@Test
 	fun `should throw RetryInputException when error is Winning NOT_IN_RANGE`() {
 		assertThrows<RetryInputException> {
-			ErrorHandler.check(Winning.NOT_IN_RANGE)
+			ErrorHandler.throwIf(Winning.NOT_IN_RANGE)
 		}
 	}
 
