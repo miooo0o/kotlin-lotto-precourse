@@ -6,22 +6,29 @@ enum class Common : ErrorType {
 	NON_ERROR
 }
 
-enum class Winning : ErrorType {
+enum class ParseError : ErrorType {
+	INVALID_NUMBER_FORMAT,
+	INVALID_RANGE
+}
+
+enum class WinningError : ErrorType {
 	INVALID_SIZE,
 	NOT_IN_RANGE,
 	DUPLICATE_NUMBER
 }
 
-enum class Bonus : ErrorType {
+enum class BonusError : ErrorType {
 	NOT_IN_RANGE,
 	DUPLICATE_NUMBER
 }
 
-enum class Purchase : ErrorType {
-	INVALID_PURCHASE_AMOUNT,
+enum class PurchaseError : ErrorType {
+	CANNOT_AFFORD_TICKET,
 	NOT_DIVISIBLE_BY_TICKET_PRICE
 }
 
-enum class Logic : ErrorType {
+enum class LogicError : ErrorType {
+	INVALID_LOGIC,
+	CONVERSION_FAILED,
 	DEFAULT
 }
