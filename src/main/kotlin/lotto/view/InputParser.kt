@@ -36,7 +36,7 @@ object InputParser {
 		throw UnexpectedException(LogicError.DEFAULT.toMessage())
 	}
 
-	private fun toStringToAmount(input: String): ValidationResult<Long> {
+	private fun fromStringToAmount(input: String): ValidationResult<Long> {
 		val numericStatus = Validator.checkDigit(input)
 		if (numericStatus.isStatusFailure()) {
 			return ValidationResult(numericStatus, null)
@@ -45,6 +45,42 @@ object InputParser {
 		val amount = input.toLongOrNull()
 		val toLongStatus = Validator.checkLongValue(amount)
 		return ValidationResult(toLongStatus, amount)
+	}
+
+	fun toWinning(input: String): List<Int> {
+		val validationResult = fromStringToWinning(input)
+		if (validationResult.isValid()) {
+			val list = validationResult.toNullFree()
+			val validateStatus = Validator.checkWinningNumbers(list)
+			if (validateStatus.isStatusSuccess()) {
+				return list
+			}
+			ExceptionHandler.throwIf(validateStatus)
+		}
+		throw UnexpectedException(LogicError.DEFAULT.toMessage())
+	}
+
+	// TODO: refactor: to small functions
+	private fun fromStringToWinning(input: String): ValidationResult<List<Int>> {
+		val winningStrings = parseCommaSeparatedStrings(input)
+		val digitStatus = Validator.checkAllDigit(winningStrings)
+		if (digitStatus.isStatusFailure())
+			return ValidationResult(digitStatus, null)
+		val listOrNull = winningStrings.map { it.toIntOrNull() }
+		if (listOrNull.any { it == null }) {
+			return ValidationResult(ParseError.INVALID_RANGE, null)
+		}
+		val list = listOrNull.filterNotNull()
+		if (list.isNotEmpty()) {
+			return ValidationResult(Common.NON_ERROR, list)
+		}
+		return ValidationResult(LogicError.CONVERSION_FAILED, null)
+	}
+
+	private fun parseCommaSeparatedStrings(input: String): List<String> {
+		val parsed = input.split(',')
+			.map { it.trim() }
+		return (parsed)
 	}
 }
 
