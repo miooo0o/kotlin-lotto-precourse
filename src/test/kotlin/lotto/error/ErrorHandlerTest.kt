@@ -2,6 +2,8 @@ package lotto.error
 
 //import lotto.policy.GamePolicy
 //import org.assertj.core.api.Assertions.assertThat
+
+import lotto.validator.Validator
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -11,6 +13,15 @@ class ErrorHandlerTest {
 	fun `should throw RetryInputException when error is Winning NOT_IN_RANGE`() {
 		assertThrows<RetryInputException> {
 			ErrorHandler.throwIf(Winning.NOT_IN_RANGE)
+		}
+	}
+
+	@Test // flow-check, TODO: moved to separate flow test file later
+	fun `should throw RetryInputException when winning numbers are out of range`() {
+		val invalidWinningNumbers = listOf(0, 1, 2, 3, 4, 5)
+		val error = Validator.isValidWinningNumbers(invalidWinningNumbers)
+		assertThrows<RetryInputException> {
+			ErrorHandler.throwIf(error)
 		}
 	}
 
