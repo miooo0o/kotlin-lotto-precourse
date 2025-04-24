@@ -1,5 +1,7 @@
 package lotto.error
 
+// TODO refactor: need to split the Exception and extension functions into different files.
+
 class RetryInputException(message: String) : IllegalArgumentException(message) {
 }
 
