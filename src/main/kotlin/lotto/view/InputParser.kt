@@ -9,8 +9,8 @@ data class ValidationResult<T>(
 	val value: T?
 ) {
 	fun isValid(): Boolean {
+		if (errorType.isStatusFailure()) return false
 		if (errorType.isStatusSuccess() && value != null) return true
-		if (errorType.isStatusFailure() && value == null) return false
 		ExceptionHandler.throwIf(LogicError.INVALID_LOGIC)
 		return false
 	}
@@ -24,14 +24,14 @@ data class ValidationResult<T>(
 object InputParser {
 
 	fun toAmount(input: String): Long {
-		val parsedAmount = toStringToAmount(input)
-		if (parsedAmount.isValid()) {
-			val validatedAmount = parsedAmount.toNullFree()
-			val errorType = Validator.checkAmount(validatedAmount)
-			if (errorType.isStatusSuccess()) {
+		val validationResult = fromStringToAmount(input)
+		if (validationResult.isValid()) {
+			val validatedAmount = validationResult.toNullFree()
+			val validateStatus = Validator.checkAmount(validatedAmount)
+			if (validateStatus.isStatusSuccess()) {
 				return validatedAmount
 			}
-			ExceptionHandler.throwIf(errorType)
+			ExceptionHandler.throwIf(validateStatus)
 		}
 		throw UnexpectedException(LogicError.DEFAULT.toMessage())
 	}
