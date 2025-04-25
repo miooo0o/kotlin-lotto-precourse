@@ -19,8 +19,6 @@ fun ErrorType.isTypeRetry(): Boolean =
 fun ErrorType.isTypeLogic(): Boolean =
 	this is LogicError
 
-fun ErrorType.isStatusSuccess(): Boolean = this == Common.NON_ERROR
-
 fun ErrorType.isStatusFailure(): Boolean = this != Common.NON_ERROR
 
 private fun fromWinning(type: WinningError): String = when (type) {
@@ -61,7 +59,7 @@ private fun fromLogic(type: LogicError): String = when (type) {
 
 // FIXME: better message
 private fun fromParse(type: ParseError): String = when (type) {
-	ParseError.EMPTY_INPUT -> "EMPTY_INPUT"
-	ParseError.INVALID_NUMBER_FORMAT -> "INVALID_NUMBER_FORMAT"
+	ParseError.NULL_FOUND -> "EMPTY_INPUT"
+	ParseError.INVALID_FORMAT -> "INVALID_NUMBER_FORMAT"
 	ParseError.INVALID_RANGE -> "INVALID_RANGE"
 }
