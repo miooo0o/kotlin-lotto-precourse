@@ -1,6 +1,7 @@
 package lotto.validator
 
 import lotto.error.BonusError
+import lotto.error.Common
 import lotto.error.PurchaseError
 import lotto.error.WinningError
 import lotto.policy.GamePolicy
@@ -23,10 +24,10 @@ class ValidatorTest {
 	}
 
 	@Test
-	fun `returns null when lotto numbers are valid`() {
+	fun `returns when lotto numbers are valid`() {
 		val winning = listOf(1, 2, 3, 4, 5, 6)
 		val errorType = Validator.checkWinningNumbers(winning)
-		Assertions.assertThat(errorType).isEqualTo(null)
+		Assertions.assertThat(errorType).isEqualTo(Common.NON_ERROR)
 	}
 
 	@Test
