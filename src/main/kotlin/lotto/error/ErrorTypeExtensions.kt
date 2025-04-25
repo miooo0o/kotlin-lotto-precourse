@@ -8,7 +8,8 @@ fun ErrorType.toMessage(): String {
 		is BonusError -> fromBonus(this)
 		is PurchaseError -> fromPurchase(this)
 		is LogicError -> fromLogic(this)
-		else -> "Unknown error"
+		is ParseError -> fromParse(this)
+		Common.NON_ERROR -> "no error"
 	}
 }
 
@@ -56,4 +57,11 @@ private fun fromLogic(type: LogicError): String = when (type) {
 	LogicError.DEFAULT -> "DEFAULT"
 	LogicError.INVALID_LOGIC -> "INVALID_LOGIC"
 	LogicError.CONVERSION_FAILED -> "CONVERSION_FAILED"
+}
+
+// FIXME: better message
+private fun fromParse(type: ParseError): String = when (type) {
+	ParseError.EMPTY_INPUT -> "EMPTY_INPUT"
+	ParseError.INVALID_NUMBER_FORMAT -> "INVALID_NUMBER_FORMAT"
+	ParseError.INVALID_RANGE -> "INVALID_RANGE"
 }
