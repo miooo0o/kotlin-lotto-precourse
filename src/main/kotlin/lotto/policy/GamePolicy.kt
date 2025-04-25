@@ -10,7 +10,7 @@ package lotto.policy
 object GamePolicy {
 
 	// Ticket Rules
-	const val TICKET_PRICE = 1000
+	const val TICKET_PRICE = 1000L
 
 	// Lotto Rules
 	const val LOTTO_SIZE = 6
@@ -29,4 +29,9 @@ object GamePolicy {
 
 	// Error Rules
 	const val ERROR_PREFIX = "[ERROR]: "
+
+	// Message
+	const val WINNING_MESSAGE = "Please enter last week's winning numbers."
+	const val BONUS_MESSAGE = "Please enter the bonus number."
+	const val AMOUNT_MESSAGE = "Please enter the purchase amount."
 }

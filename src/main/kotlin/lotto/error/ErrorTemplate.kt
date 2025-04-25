@@ -12,9 +12,9 @@ object ErrorTemplate {
 	fun duplicate(label: String): String =
 		"${GamePolicy.ERROR_PREFIX} $label must not be duplicated."
 
-	fun notDivisibleBy(label: String, divisor: Int): String =
+	fun notDivisibleBy(label: String, divisor: Long): String =
 		"${GamePolicy.ERROR_PREFIX} $label must be divisible by $divisor."
 
-	fun invalidPurchaseAmount(ticketPrice: Int) =
+	fun invalidPurchaseAmount(ticketPrice: Long) =
 		"${GamePolicy.ERROR_PREFIX} purchase amount must be greater than or equal to $ticketPrice."
 }
