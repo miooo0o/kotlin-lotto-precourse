@@ -2,64 +2,39 @@ package lotto.view
 
 import camp.nextstep.edu.missionutils.Console
 import lotto.error.*
-import lotto.policy.*
+import lotto.view.input.*
+import lotto.view.util.printPrompt
+import lotto.view.util.validateOrThrow
 
 object InputView {
 
-	fun readWinning(): List<Int> {
-		val input = readInput(GamePolicy.WINNING_MESSAGE)
-		val strings = parseStrings(input)
-		return parseNumbers(strings)
+	fun parseWinningNumbersOrThrow(input: String): List<Int> =
+		parseAndValidate(input, ::parseWinningNumbers, ::validateWinningNumbers)
+
+	fun parseBonusNumberOrThrow(input: String): Int =
+		parseAndValidate(input, ::parseBonusNumber, ::validateBonusNumber)
+
+	fun parseAmountOrThrow(input: String): Long =
+		parseAndValidate(input, ::parseAmount, ::validateAmount)
+
+	fun readLineFromConsole(prompt: String): String {
+		printPrompt(prompt)
+		return Console.readLine()
+			?: throw RetryInputException(ParseError.NULL_FOUND.toMessage())
 	}
 
-	// TODO
-	fun readBonus(): List<Int> {
-		val input = readInput(GamePolicy.WINNING_MESSAGE)
-		val strings = parseStrings(input)
-		return parseNumbers(strings)
-	}
-
-	// TODO
-	fun readAmount(): List<Int> {
-		val input = readInput(GamePolicy.WINNING_MESSAGE)
-		val strings = parseStrings(input)
-		return parseNumbers(strings)
-	}
-
-	private fun printPrompt(line: String) {
-		println(line)
-	}
-
-	private fun readInput(line: String): String {
-		printPrompt(line)
-		return (Console.readLine())
-			.validateOrThrow { if (it == null) ParseError.EMPTY_INPUT else Common.NON_ERROR }
-			.trim()
-	}
-
-	private fun parseStrings(input: String): List<String> {
-		return input.split(',')
-			.map { it.trim() }
-			.validateOrThrow { it.containsOnlyNumeric() }
-	}
-
-	private fun parseNumbers(strings: List<String>): List<Int> {
-		return strings
-			.map { it.toInt() }
-			.validateOrThrow {
-				listOf(
-					it.hasValidSize(),
-					it.hasNoDuplicates(),
-					it.isInValidRange(),
-				).firstOrNull { error -> error.isStatusFailure() } ?: Common.NON_ERROR
-			}
-	}
-
-	private inline fun <T> T.validateOrThrow(validation: (T) -> ErrorType): T {
-		val error = validation(this)
-		if (error.isStatusFailure()) {
-			throw RetryInputException(error.toMessage())
+	private fun <T> parseAndValidate(
+		input: String,
+		parse: (String) -> T?,
+		validate: (T) -> ErrorType
+	): T {
+		val notNullInput = input.validateOrThrow {
+			if (it == null) ParseError.NULL_FOUND else Common.NON_ERROR
 		}
-		return this
+		val parsed = parse(notNullInput)
+			?: throw RetryInputException(ParseError.INVALID_FORMAT.toMessage())
+		parsed.validateOrThrow(validate)
+		return parsed
 	}
+
 }
