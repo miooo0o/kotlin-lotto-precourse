@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
-class ErrorHandlerTest {
+class ExceptionHandlerTest {
 
 	@Test
 	fun `should throw RetryInputException when error is Winning NOT_IN_RANGE`() {
