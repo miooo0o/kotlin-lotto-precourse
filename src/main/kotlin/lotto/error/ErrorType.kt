@@ -7,8 +7,8 @@ enum class Common : ErrorType {
 }
 
 enum class ParseError : ErrorType {
-	EMPTY_INPUT,
-	INVALID_NUMBER_FORMAT,
+	NULL_FOUND,
+	INVALID_FORMAT,
 	INVALID_RANGE
 }
 
