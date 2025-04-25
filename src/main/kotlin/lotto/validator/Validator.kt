@@ -34,12 +34,12 @@ object Validator {
 	}
 
 	fun checkLongValue(num: Long?): ErrorType =
-		ParseError.INVALID_RANGE.takeIf { num != null } ?: Common.NON_ERROR
+		ParseError.INVALID_RANGE.takeIf { num == null } ?: Common.NON_ERROR
 
 	fun checkDigit(input: String): ErrorType =
-		ParseError.INVALID_NUMBER_FORMAT.takeIf { input.all { it.isDigit() } } ?: Common.NON_ERROR
+		ParseError.INVALID_NUMBER_FORMAT.takeIf { input.any { !it.isDigit() } } ?: Common.NON_ERROR
 
-	fun checkAllDigit(winningList: List<String>): ErrorType =
+	fun checkNumeric(winningList: List<String>): ErrorType =
 		ParseError.INVALID_NUMBER_FORMAT.takeIf { winningList.all { checkDigit(it) == Common.NON_ERROR } }
 			?: Common.NON_ERROR
 
