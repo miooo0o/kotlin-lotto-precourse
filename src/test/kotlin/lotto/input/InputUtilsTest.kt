@@ -7,12 +7,11 @@ import lotto.error.WinningError
 import lotto.error.toMessage
 import lotto.policy.GamePolicy
 import lotto.view.InputView
-import lotto.view.util.repeatUntilValid
+import lotto.view.repeatUntilValid
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-
 
 class InputUtilsTest : NsTest() {
 
@@ -82,6 +81,7 @@ class InputUtilsTest : NsTest() {
 
 	override fun runMain() {}
 
+	// TODO: delete unused const val
 	companion object {
 		// Valid Inputs
 		private const val VALID_PURCHASE_AMOUNT = "14000"
