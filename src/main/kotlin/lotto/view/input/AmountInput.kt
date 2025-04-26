@@ -2,6 +2,7 @@ package lotto.view.input
 
 import lotto.error.Common
 import lotto.error.ErrorType
+import lotto.error.isStatusFailure
 import lotto.policy.isAtLeastTicketPrice
 import lotto.policy.isDivisibleByTicketPrice
 
@@ -13,5 +14,5 @@ fun validateAmount(amount: Long): ErrorType {
 	return listOf(
 		amount.isAtLeastTicketPrice(),
 		amount.isDivisibleByTicketPrice()
-	).firstOrNull() ?: Common.NON_ERROR
+	).firstOrNull { it.isStatusFailure() } ?: Common.NON_ERROR
 }
