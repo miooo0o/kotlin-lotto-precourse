@@ -1,15 +1,7 @@
-package lotto.view.util
+package lotto.view
 
-import lotto.error.*
-import lotto.view.InputView
-
-internal inline fun <T> T.validateOrThrow(validation: (T) -> ErrorType): T {
-	val error = validation(this)
-	if (error.isStatusFailure()) {
-		throw RetryInputException(error.toMessage())
-	}
-	return this
-}
+import lotto.error.RetryInputException
+import lotto.error.UnexpectedException
 
 fun <T> repeatUntilValid(
 	prompt: String,
