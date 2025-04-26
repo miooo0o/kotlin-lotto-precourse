@@ -2,9 +2,8 @@ package lotto.view
 
 import camp.nextstep.edu.missionutils.Console
 import lotto.error.*
+import lotto.util.validateOrThrow
 import lotto.view.input.*
-import lotto.view.util.printPrompt
-import lotto.view.util.validateOrThrow
 
 object InputView {
 

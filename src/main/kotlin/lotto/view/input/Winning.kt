@@ -7,7 +7,7 @@ import lotto.error.isStatusFailure
 import lotto.policy.hasNoDuplicates
 import lotto.policy.hasValidSize
 import lotto.policy.isInRange
-import lotto.view.util.validateOrThrow
+import lotto.util.validateOrThrow
 
 fun parseWinningNumbers(input: String): List<Int>? {
 	val numbers = input.split(',')
