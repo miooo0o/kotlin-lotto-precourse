@@ -11,6 +11,7 @@ object GamePolicy {
 
 	// Ticket Rules
 	const val TICKET_PRICE = 1000L
+	const val MAX_ALLOWABLE_AMOUNT = 2147483647000L
 
 	// Lotto Rules
 	const val LOTTO_SIZE = 6

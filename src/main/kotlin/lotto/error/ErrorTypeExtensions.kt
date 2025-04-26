@@ -21,6 +21,8 @@ fun ErrorType.isTypeLogic(): Boolean =
 
 fun ErrorType.isStatusFailure(): Boolean = this != Common.NON_ERROR
 
+fun ErrorType.isStatusSuccess(): Boolean = this == Common.NON_ERROR
+
 private fun fromWinning(type: WinningError): String = when (type) {
 	WinningError.INVALID_SIZE -> ErrorTemplate.numberCount(GamePolicy.LOTTO_SIZE)
 	WinningError.NOT_IN_RANGE -> ErrorTemplate.numberRange(
@@ -48,6 +50,8 @@ private fun fromPurchase(type: PurchaseError): String = when (type) {
 		"purchase amount",
 		GamePolicy.TICKET_PRICE
 	)
+
+	PurchaseError.AMOUNT_TOO_LARGE -> "Purchase amount is too large to process."
 }
 
 // FIXME: better message
