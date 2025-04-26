@@ -8,8 +8,7 @@ enum class Common : ErrorType {
 
 enum class ParseError : ErrorType {
 	NULL_FOUND,
-	INVALID_FORMAT,
-	INVALID_RANGE
+	INVALID_FORMAT
 }
 
 enum class WinningError : ErrorType {

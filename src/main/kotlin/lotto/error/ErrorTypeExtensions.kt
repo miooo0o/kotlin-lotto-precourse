@@ -60,6 +60,5 @@ private fun fromLogic(type: LogicError): String = when (type) {
 // FIXME: better message
 private fun fromParse(type: ParseError): String = when (type) {
 	ParseError.NULL_FOUND -> "EMPTY_INPUT"
-	ParseError.INVALID_FORMAT -> "INVALID_NUMBER_FORMAT"
-	ParseError.INVALID_RANGE -> "INVALID_RANGE"
+	ParseError.INVALID_FORMAT -> "INVALID_FORMAT"
 }
