@@ -28,7 +28,7 @@ object GamePolicy {
 	const val BONUS_NUMBER_MUST_NOT_DUPLICATE = true
 
 	// Error Rules
-	const val ERROR_PREFIX = "[ERROR]: "
+	const val ERROR_PREFIX = "[ERROR]:"
 
 	// Message
 	const val WINNING_MESSAGE = "Please enter last week's winning numbers."
