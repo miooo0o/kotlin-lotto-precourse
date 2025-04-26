@@ -24,7 +24,8 @@ enum class BonusError : ErrorType {
 
 enum class PurchaseError : ErrorType {
 	CANNOT_AFFORD_TICKET,
-	NOT_DIVISIBLE_BY_TICKET_PRICE
+	NOT_DIVISIBLE_BY_TICKET_PRICE,
+	AMOUNT_TOO_LARGE
 }
 
 enum class LogicError : ErrorType {

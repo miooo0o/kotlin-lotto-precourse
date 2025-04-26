@@ -9,6 +9,10 @@ fun Long.isAtLeastTicketPrice(): ErrorType =
 fun Long.isDivisibleByTicketPrice(): ErrorType =
 	PurchaseError.NOT_DIVISIBLE_BY_TICKET_PRICE.takeIf { this % GamePolicy.TICKET_PRICE != 0L } ?: Common.NON_ERROR
 
+fun Long.isBelowMaxAllowableAmount(): ErrorType =
+	PurchaseError.AMOUNT_TOO_LARGE.takeIf { this > GamePolicy.MAX_ALLOWABLE_AMOUNT } ?: Common.NON_ERROR
+
+
 // String type
 fun String.containsOnlyDigits(): ErrorType =
 	ParseError.INVALID_FORMAT.takeIf { this.any { !it.isDigit() } } ?: Common.NON_ERROR
