@@ -27,6 +27,7 @@ object GameService {
 	private fun purchaseLottos(): Pair<List<Lotto>, Long> {
 		val amount = readPurchaseAmount()
 		val lottoList = issueLottoList(amount)
+
 		OutputView.displayPurchasedTickets(lottoList)
 		return lottoList to amount
 	}
