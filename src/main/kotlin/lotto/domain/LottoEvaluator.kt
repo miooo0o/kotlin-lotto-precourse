@@ -6,7 +6,7 @@ object LottoEvaluator {
 	fun evaluate(
 		lottoList: List<Lotto>,
 		winningNumbers: List<Int>,
-		bonusNumber: Int
+		bonusNumber: Int,
 	): Map<Rank, Int> {
 		val evaluatedRanks = lottoList.map { lotto ->
 			evaluateEach(lotto, winningNumbers, bonusNumber)
@@ -20,7 +20,7 @@ object LottoEvaluator {
 	private fun evaluateEach(
 		lotto: Lotto,
 		winningNumbers: List<Int>,
-		bonusNumber: Int
+		bonusNumber: Int,
 	): Rank {
 		val matchedCount = lotto.countMatched(winningNumbers)
 		val bonusMatched = lotto.contains(bonusNumber)

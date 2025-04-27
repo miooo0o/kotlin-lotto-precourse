@@ -25,7 +25,7 @@ object InputView {
 	private fun <T> parseAndValidate(
 		input: String,
 		parse: (String) -> T?,
-		validate: (T) -> ErrorType
+		validate: (T) -> ErrorType,
 	): T {
 		val notNullInput = input.validateOrThrow {
 			if (it == null) ParseError.NULL_FOUND else Common.NON_ERROR
