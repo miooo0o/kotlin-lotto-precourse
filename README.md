@@ -1,9 +1,11 @@
-# Lotto
+## Lotto
 
 Lotto is a simple command-line application that simulates a lottery ticket system. Users can purchase tickets, check
 them against winning numbers, and calculate their winnings.
 
-## Implementation Requirements
+---
+
+### Implementation Requirements
 
 | Requirement        | Description                                                                                                                 |
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------|
@@ -31,33 +33,106 @@ To receive user input, use `Console.readLine()` from `camp.nextstep.edu.missionu
 
 ## Development Approach
 
-> I'm trying my best to learn and practice TDD with this project!
+Development Approach
 
-## Architecture
+- **Initial Approach**: Started with a C++-inspired structure, but shifted to Kotlin’s functional style and TDD for
+  better modularity.
+- **TDD Experience**: I initially followed Test-Driven Development (TDD) but found it challenging to maintain as the
+  project progressed due to time constraints and complexity. Despite this, early TDD helped me focus on testable units.
+- **Error Handling**: Focused on robust error handling using try-catch blocks for input validation and meaningful error
+  messages.
+- **Refactoring**: Refactored the code into modular components like Lotto, LottoIssuer, and GameResult, making it easier
+  to maintain and test, though not all logic was fully covered by tests later on.
 
-### Application Flow
+### System Flow
 
 ```
-Input(object) → Validator(object or inline) → Logic(class) → Output(object)
+1. User Input
+   │
+2. InputView (parseAmountOrThrow, parseWinningNumbersOrThrow, parseBonusNumberOrThrow)
+   │  └── validates input format
+   │
+3. Policy Validation (via PolicyExtensions)
+   │  └── isAtLeastTicketPrice, hasValidSize, isInRange, doesNotOverlapWithWinningNumbers, etc.
+   │      └── returns ErrorType
+   │
+4. Domain Processing
+   │  ├── Lotto (validates and holds ticket numbers)
+   │  ├── LottoIssuer (generates lottery tickets based on amount)
+   │  └── LottoNumbers (generates random numbers)
+   │
+5. Service Orchestration (GameService)
+   │  └── coordinates domain objects and view interactions
+   │
+6. Result Processing (GameResult)
+   │  ├── LottoEvaluator (evaluates tickets against winning numbers)
+   │  ├── Rank (determines prize tier based on match count)
+   │  └── calculates profit rate
+   │
+7. Output Formatting (OutputView)
+   │  └── formats results in user-friendly format
+   │
+8. User Display
 ```
 
-### Class Structure
+### Architecture
 
-- **Lotto**: Core domain class representing a lottery ticket
-- **LottoPolicy**: Contains constants and validation rules for the lottery domain
-- **Validator**: Handles input validation logic
-- **InputView/OutputView**: Manage user interaction (input/output)
-- **Application**: Entry point containing the main function
+```text
+lotto/
+├── domain/                     # Core business logic and entities
+│   ├── Lotto.kt                # Represents a lottery ticket with validation logic
+│   ├── LottoIssuer.kt          # Manages ticket issuance based on purchase amount
+│   ├── LottoEvaluator.kt       # Evaluates tickets against winning numbers
+│   ├── Rank.kt                 # Enum representing different prize tiers
+│   └── LottoNumbers.kt         # Generates random lottery numbers
+├── error/                      # Error handling framework
+│   ├── ErrorTemplate.kt        # Templates for consistent error messages
+│   ├── ErrorType.kt            # Sealed interface for all error types
+│   ├── ErrorTypeExtensions.kt  # Extension functions for error processing
+│   └── ExceptionHandler.kt     # Central exception handling logic
+├── policy/                     # Business rules and validation logic
+│   ├── GamePolicy.kt           # Constants and configuration for the lottery game
+│   └── PolicyExtensions.kt     # Extension functions for validation rules
+├── service/                    # Application services that orchestrate domain logic
+│   ├── GameService.kt          # Controls the overall game flow
+│   └── GameResult.kt           # Represents the result of a lottery game
+├── util/                       # Common utilities
+│   └── ValidationUtils.kt      # Helper functions for validation logic
+├── view/                       # User interface components
+│   ├── input/                  # User input handling
+│   │   ├── FakeConsole.kt      # Mock console for testing purposes
+│   │   ├── InputView.kt        # Handles user input with validation
+│   │   ├── OutputView.kt       # Formats and displays results to users
+│   │   └── ViewUtils.kt        # Common utilities for view handling
+├── Application.kt              # Main entry point for the application
+└── Lotto.kt                    # Main Lotto application logic
+```
 
-## Feature List
+### Exception Handling
 
-### Input Processing
+The application uses try-catch blocks at two crucial points in the flow:
+
+1. In main function
+   • Used to catch any unexpected errors that might arise during the execution of the lottery game, ensuring the
+   application does not crash unexpectedly.
+2. In repeatUntilValid function
+   • Handles validation errors and provides users with clear error messages, allowing them to correct input and retry
+   without restarting the application.
+
+These two try-catch blocks ensure that errors are caught at the appropriate layers (controller and UI validation) and
+that the user experience is smooth with continuous retries on invalid input.
+
+---
+
+### Feature List
+
+#### Input Processing
 
 - [x] Accept purchase amount
 - [x] Accept winning numbers (6 unique numbers)
 - [x] Accept bonus number
 
-### Validation
+#### Validation
 
 - [x] Validate purchase amount (must be divisible by 1,000)
 - [x] Validate numbers are within range (1-45)
@@ -66,11 +141,14 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
 - [x] Move logic functions out of `LottoPolicy` into `Validator`
 - [x] Create error → message mapper for consistent `[ERROR]: ...` output
 
-### Error Handling
+#### Error Handling
 
-- [x]
+- [x] Create a sealed interface for error types
+- [x] Develop a structured error handling mechanism
+- [x] Support different error categories (ParseError, WinningError, BonusError, PurchaseError)
+- [x] Provide clear, user-friendly error messages
 
-### Exception Handling
+#### Exception Handling
 
 - [x] Handle invalid purchase amount
 - [x] Handle invalid number range
@@ -82,14 +160,14 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
 - [x] Manage retry loops
 - [x] Use try-catch blocks to catch exceptions and guide user through input correction
 
-### Lotto Generation
+#### Lotto Generation
 
 - [x] Generate lotto tickets based on purchase amount
 - [x] Create random numbers for each ticket
 - [x] Sort lotto numbers in ascending order
-- [ ] Display purchased tickets
+- [x] Display purchased tickets
 
-### Winner Calculation
+#### Winner Calculation
 
 - [x] Compare each ticket with winning numbers
 - [x] Determine match count for each ticket
@@ -101,77 +179,52 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
     - 4th: 4 matches
     - 5th: 3 matches
 
-### Result Output
+#### Result Output
 
-- [ ] Display winning statistics
-- [ ] Calculate total return rate
-- [ ] Format return rate to one decimal place
-
-## Exception Strategy
-
-The application will use two primary exception types as required:
-
-- IllegalArgumentException: For input validation failures (invalid numbers, formats, etc.)
-- IllegalStateException: For application state-related errors (if any occur)
-
-The LottoError class will be responsible for:
-
-1. Connecting LottoErrorType with the appropriate exception type
-2. Generating properly formatted error messages
-3. Throwing the correct exception with consistent messaging
-
-Input retry logic will be managed in the controller layer, which will:
-
-1. Catch specific exceptions
-2. Display appropriate error messages
-3. Allow users to retry input from the failed step
-
-## Test Progress
-
-### Completed Tests
-
-- [x] Validator tests for purchase amount validation
-- [x] Validator tests for lottery number validation
-- [x] Validator tests for bonus number validation
-- [x] Error message generation tests
-
-### Planned Tests
-
-- [x] Exception handling tests with retry scenarios
-- [ ] Lotto ticket generation tests
-- [ ] Match calculation tests
-- [ ] Prize calculation tests
+- [x] Display winning statistics
+- [x] Calculate total return rate
+- [x] Format return rate to one decimal place
 
 ---
 
-## Example Execution
+### Test
 
-```
-Please enter the purchase amount.
-8000
+#### Domain Tests
 
-You have purchased 8 tickets.
-[8, 21, 23, 41, 42, 43] 
-[3, 5, 11, 16, 32, 38] 
-[7, 11, 16, 35, 36, 44] 
-[1, 8, 11, 31, 41, 42] 
-[13, 14, 16, 38, 42, 45] 
-[7, 11, 30, 40, 42, 43] 
-[2, 13, 22, 32, 38, 45] 
-[1, 3, 5, 14, 22, 45]
+- [x] Lotto Validation
+- [x] Number count validation (Ensures the lotto has exactly 6 numbers)
+- [x] Duplicate number detection (Ensures no duplicates in a single ticket)
+- [x] Range validation (Ensures all numbers are within valid range)
+- [x] LottoEvaluator Ranking Accuracy
+- [x] Ensures that the LottoEvaluator correctly ranks tickets based on matching numbers.
+- [x] Rank Determination Logic
+- [x] Validates that rank is correctly determined based on the number of matching numbers and bonus number.
 
-Please enter last week's winning numbers.
-1,2,3,4,5,6
+#### Integration Tests
 
-Please enter the bonus number.
-7
+- [x] End-to-End Application Flow
+- [x] Validates the entire flow from user input to result display, ensuring that the system behaves correctly in the
+  full
+  cycle.
+- [x] Random Number Generation Handling
+- [x] Ensures that random number generation behaves as expected, with no duplicate numbers and all numbers within the
+  valid
+  range.
+- [x] Error Scenarios and Error Messages
+- [x] Ensures that all invalid inputs (e.g., invalid purchase amount, invalid lotto numbers) trigger the appropriate
+  error
+  messages.
 
-Winning Statistics
----
-3 Matches (5,000 KRW) - 1 ticket
-4 Matches (50,000 KRW) - 0 tickets
-5 Matches (1,500,000 KRW) - 0 tickets
-5 Matches + Bonus Ball (30,000,000 KRW) - 0 tickets
-6 Matches (2,000,000,000 KRW) - 0 tickets
-Total return rate is 62.5%.
-```
+#### Edge Cases
+
+- [x] Invalid Inputs
+- [x] Tests scenarios where the user inputs values out of the valid range or enters duplicates.
+- [x] Ensures that input validation handles these gracefully.
+- [x] Boundary Conditions for Winning Calculations
+- [x] Validates winning calculations at the edges of the rules, ensuring that tickets with 3, 4, 5, or 6 matches (with
+  and
+  without the bonus) are handled correctly.
+- [x] Exception Handling Verification
+- [x] Ensures that exceptions are properly thrown for invalid inputs and unexpected scenarios, such as invalid lotto
+  number
+  format or exceeding the maximum ticket purchase limit.
