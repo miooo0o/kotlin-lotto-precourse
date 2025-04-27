@@ -1,20 +1,18 @@
 package lotto
 
-import lotto.error.RetryInputException
 import lotto.error.UnexpectedException
 import lotto.service.GameService
+import lotto.view.OutputView
 
 fun main() {
 	try {
 		val gameResult = GameService.start()
 		GameService.show(gameResult)
-	} catch (e: RetryInputException) {
-		println(e.message)
 	} catch (e: UnexpectedException) {
-		println("An unexpected error occurred: ${e.message}") // TODO: message should start with [ERROR]:
+		OutputView.displayErrorMessage("An unexpected error occurred", e)
 		return
 	} catch (e: Exception) {
-		println("Something went wrong: ${e.message}")  // TODO: message should start with [ERROR]:
+		OutputView.displayErrorMessage("Something went wrong", e)
 		return
 	}
 }

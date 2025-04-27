@@ -11,7 +11,6 @@ object OutputView {
 		requireOrUnexpected(lottoList.size >= GamePolicy.MIN_TICKET_SIZE) {
 			"The registered lotto must be ${GamePolicy.MIN_TICKET_SIZE} or more"
 		}
-
 		println("You have purchased ${lottoList.size} tickets.")
 		lottoList.forEach { it.display() }
 		println()
@@ -23,6 +22,12 @@ object OutputView {
 
 	fun displayProfitRate(profitRate: Double) {
 		println("Total return rate is ${profitRate}%.")
+	}
+
+	fun displayErrorMessage(message: String, exception: Exception) {
+		val eMessage = exception.message.toString()
+		val cleanedDetail = eMessage.replace("[ERROR]", "").trim()
+		println("${GamePolicy.ERROR_PREFIX} ${message}: $cleanedDetail")
 	}
 
 	private fun showLottoMap(lottoMap: Map<Rank, Int>) {
