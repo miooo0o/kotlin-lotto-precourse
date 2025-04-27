@@ -14,7 +14,7 @@ object InputView {
 		parseAndValidate(input, ::parseBonusNumber, ::validateBonusNumber)
 
 	fun parseAmountOrThrow(input: String): Long =
-		parseAndValidate(input, ::parseAmount, ::validateAmount)
+		parseAndValidate(input, ::parseAmountOrNull, ::validateAmount)
 
 	fun readLineFromConsole(prompt: String): String {
 		printPrompt(prompt)
@@ -35,5 +35,4 @@ object InputView {
 		parsed.validateOrThrow(validate)
 		return parsed
 	}
-
 }
