@@ -1,10 +1,6 @@
 package lotto.util
 
-import lotto.error.ErrorType
-import lotto.error.RetryInputException
-import lotto.error.isStatusFailure
-import lotto.error.toMessage
-
+import lotto.error.*
 
 internal inline fun <T> T.validateOrThrow(validation: (T) -> ErrorType): T {
 	val error = validation(this)
@@ -12,4 +8,10 @@ internal inline fun <T> T.validateOrThrow(validation: (T) -> ErrorType): T {
 		throw RetryInputException(error.toMessage())
 	}
 	return this
+}
+
+internal inline fun requireOrUnexpected(condition: Boolean, lazyMessage: () -> String) {
+	if (!condition) {
+		throw UnexpectedException(lazyMessage())
+	}
 }
