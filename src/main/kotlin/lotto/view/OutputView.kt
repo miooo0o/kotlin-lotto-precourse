@@ -21,19 +21,9 @@ object OutputView {
 		showLottoMap(matchResults)
 	}
 
-	// TODO: move to GameResult
-	fun displayProfitRate(
-		rankCountMap: Map<Rank, Int>,
-		totalPurchaseAmount: Long
-	) {
-		val totalPrize = rankCountMap.entries.sumOf { (rank, count) ->
-			rank.prize.toLong() * count
-		}
-		val profitRate = (totalPrize.toDouble() / totalPurchaseAmount) * 100
-		val rate = "%.1f".format(profitRate).toDouble()
-		println("Total return rate is ${rate}%.")
+	fun displayProfitRate(profitRate: Double) {
+		println("Total return rate is ${profitRate}%.")
 	}
-
 
 	private fun showLottoMap(lottoMap: Map<Rank, Int>) {
 		println("Winning Statistics")
