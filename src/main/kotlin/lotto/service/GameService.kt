@@ -9,13 +9,25 @@ import lotto.view.InputView
 import lotto.view.OutputView
 import lotto.view.repeatUntilValid
 
+/**
+ * Main service responsible for managing the game flow.
+ * Handles purchasing lottos, reading winning numbers, and showing the result.
+ */
 object GameService {
+
+	/**
+	 * Starts the game by handling lotto purchase and winning number input.
+	 * @return a [GameResult] containing all relevant game data.
+	 */
 	fun start(): GameResult {
 		val (lottoList, amount) = purchaseLottos()
 		val (winningNumbers, bonusNumber) = readWinningInfo()
 		return GameResult(lottoList, winningNumbers, bonusNumber, amount)
 	}
 
+	/**
+	 * Displays the game result, including match statistics and profit rate.
+	 */
 	fun show(result: GameResult) {
 		val matchResults = result.evaluateRanks()
 		val profitRate = result.calculateProfitRate()
@@ -24,6 +36,12 @@ object GameService {
 		OutputView.displayProfitRate(profitRate)
 	}
 
+
+	/**
+	 * Handles the lotto purchasing flow.
+	 * Internally uses [repeatUntilValid] to handle input (try-catch) retries on errors.
+	 * @return a [Pair] of purchased lotto tickets and purchase amount.
+	 */
 	private fun purchaseLottos(): Pair<List<Lotto>, Long> {
 		val amount = readPurchaseAmount()
 		val lottoList = issueLottoList(amount)
@@ -32,6 +50,12 @@ object GameService {
 		return lottoList to amount
 	}
 
+
+	/**
+	 * Reads winning numbers and bonus number from the user.
+	 * Internally uses [repeatUntilValid] to handle input (try-catch) retries on errors.
+	 * @return a [Pair] of winning numbers and bonus number.
+	 */
 	private fun readWinningInfo(): Pair<List<Int>, Int> {
 		val winningNumbers = readWinningNumbers()
 		val bonusNumber = readBonusNumber(winningNumbers)
