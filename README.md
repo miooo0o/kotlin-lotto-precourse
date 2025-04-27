@@ -53,9 +53,9 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
 
 ### Input Processing
 
-- [ ] Accept purchase amount
-- [ ] Accept winning numbers (6 unique numbers)
-- [ ] Accept bonus number
+- [x] Accept purchase amount
+- [x] Accept winning numbers (6 unique numbers)
+- [x] Accept bonus number
 
 ### Validation
 
@@ -63,9 +63,8 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
 - [x] Validate numbers are within range (1-45)
 - [x] Validate numbers have no duplicates
 - [x] Validate bonus number is not among winning numbers
-- [ ] Move logic functions out of `LottoPolicy` into `Validator`
-- [ ] Remove `fun` definitions from `LottoPolicy` entirely
-- [ ] Create error → message mapper for consistent `[ERROR]: ...` output
+- [x] Move logic functions out of `LottoPolicy` into `Validator`
+- [x] Create error → message mapper for consistent `[ERROR]: ...` output
 
 ### Error Handling
 
@@ -78,24 +77,24 @@ Input(object) → Validator(object or inline) → Logic(class) → Output(object
 - [x] Handle duplicate numbers
 - [x] Handle incorrect number count
 - [x] Display error messages with `[ERROR]:` prefix
-- [ ] Add error validation to `InputView` and loop on invalid input
-- [ ] Integrate error handling in full application flow (input → validate → retry)
-- [ ] Manage retry loops in controller components
-- [ ] Use try-catch blocks to catch exceptions and guide user through input correction
+- [x] Add error validation to `InputView` and loop on invalid input
+- [x] Integrate error handling in full application flow (input → validate → retry)
+- [x] Manage retry loops
+- [x] Use try-catch blocks to catch exceptions and guide user through input correction
 
 ### Lotto Generation
 
-- [ ] Generate lotto tickets based on purchase amount
-- [ ] Create random numbers for each ticket
-- [ ] Sort lotto numbers in ascending order
+- [x] Generate lotto tickets based on purchase amount
+- [x] Create random numbers for each ticket
+- [x] Sort lotto numbers in ascending order
 - [ ] Display purchased tickets
 
 ### Winner Calculation
 
-- [ ] Compare each ticket with winning numbers
-- [ ] Determine match count for each ticket
-- [ ] Check for bonus number match
-- [ ] Categorize winning tickets by rank
+- [x] Compare each ticket with winning numbers
+- [x] Determine match count for each ticket
+- [x] Check for bonus number match
+- [x] Categorize winning tickets by rank
     - 1st: 6 matches
     - 2nd: 5 matches + bonus
     - 3rd: 5 matches
@@ -138,7 +137,7 @@ Input retry logic will be managed in the controller layer, which will:
 
 ### Planned Tests
 
-- [ ] Exception handling tests with retry scenarios
+- [x] Exception handling tests with retry scenarios
 - [ ] Lotto ticket generation tests
 - [ ] Match calculation tests
 - [ ] Prize calculation tests
