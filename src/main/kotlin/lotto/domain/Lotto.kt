@@ -1,17 +1,18 @@
 package lotto.domain
 
-import lotto.error.WinningError
-import lotto.error.isStatusSuccess
-import lotto.error.toMessage
+import lotto.error.UnexpectedException
+import lotto.error.isStatusFailure
+import lotto.policy.GamePolicy
 import lotto.policy.hasNoDuplicates
 import lotto.policy.hasValidSize
 import lotto.policy.isInRange
 
 class Lotto(numbers: List<Int>) {
-	private val ticketNumbers: List<Int> = numbers.sorted()
+	private val ticketNumbers: List<Int>
 
 	init {
-		this.ticketNumbers.validateSelf()
+		validateNumbers(numbers)
+		ticketNumbers = numbers.toList().sorted()
 	}
 
 	fun display() {
@@ -25,10 +26,18 @@ class Lotto(numbers: List<Int>) {
 	fun contains(bonusNumber: Int): Boolean {
 		return ticketNumbers.contains(bonusNumber)
 	}
-}
 
-private fun List<Int>.validateSelf() {
-	require(hasValidSize().isStatusSuccess()) { WinningError.INVALID_SIZE.toMessage() }
-	require(hasNoDuplicates().isStatusSuccess()) { WinningError.DUPLICATE_NUMBER.toMessage() }
-	require(isInRange().isStatusSuccess()) { WinningError.NOT_IN_RANGE.toMessage() }
+	companion object {
+		private fun validateNumbers(numbers: List<Int>) {
+			listOf(
+				numbers.hasValidSize(),
+				numbers.hasNoDuplicates(),
+				numbers.isInRange()
+			).forEach { errorType ->
+				if (errorType.isStatusFailure()) {
+					throw UnexpectedException("${GamePolicy.ERROR_PREFIX} Lotto Validation failed")
+				}
+			}
+		}
+	}
 }
