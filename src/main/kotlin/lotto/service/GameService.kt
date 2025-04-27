@@ -3,8 +3,12 @@ package lotto.service
 import lotto.domain.Lotto
 import lotto.domain.LottoIssuer
 import lotto.policy.GamePolicy
-import lotto.policy.isNotInWinningNumbers
-import lotto.view.*
+import lotto.policy.doesNotOverlapWithWinningNumbers
+import lotto.policy.hasValidSize
+import lotto.util.requireOrUnexpected
+import lotto.view.InputView
+import lotto.view.OutputView
+import lotto.view.repeatUntilValid
 
 object GameService {
 	fun start() {
@@ -16,10 +20,28 @@ object GameService {
 		val winningNumbers = readWinningNumbers()
 		val bonusNumber = readBonusNumber(winningNumbers)
 
-		val map = lottoList.evaluateRanks(winningNumbers, bonusNumber)
-		map.displayMatches()
+	// TODO: move to GameResult
+	private fun evaluateRanks(
+		lottoList: List<Lotto>,
+		winningNumbers: List<Int>,
+		bonusNumber: Int
+	): Map<Rank, Int> {
+		basicRequireForDisplayOrThrow(lottoList, winningNumbers, bonusNumber)
+		return LottoEvaluator.evaluate(lottoList, winningNumbers, bonusNumber)
+	}
 
-		// -> Total return is (double.0)%.
+	private fun basicRequireForDisplayOrThrow(
+		lottoList: List<Lotto>,
+		winningNumbers: List<Int>,
+		bonusNumber: Int
+	) {
+		requireOrUnexpected(lottoList.isNotEmpty()) { "No lotto list to evaluate." }
+		requireOrUnexpected(
+			winningNumbers.hasValidSize().isStatusSuccess()
+		) { "Winning numbers must have exactly ${GamePolicy.LOTTO_SIZE} numbers." }
+		requireOrUnexpected(
+			bonusNumber.doesNotOverlapWithWinningNumbers(winningNumbers).isStatusSuccess()
+		) { "Bonus number must not overlap with winning numbers." }
 	}
 
 	private fun readPurchaseAmount(): Long {
@@ -51,7 +73,7 @@ object GameService {
 		val bonus = repeatUntilValid(
 			prompt = GamePolicy.BONUS_MESSAGE,
 			reader = { InputView.parseBonusNumberOrThrow(it) },
-			validator = { it.isNotInWinningNumbers(winning) }
+			validator = { it.doesNotOverlapWithWinningNumbers(winning) }
 		)
 		println()
 		return bonus
