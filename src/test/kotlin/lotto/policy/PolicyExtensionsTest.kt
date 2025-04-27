@@ -58,7 +58,7 @@ class PolicyValidationTest {
 
 	@Test
 	fun `should return error when bonus number is in winning numbers`() {
-		val actual = 5.isNotInWinningNumbers(listOf(1, 2, 3, 4, 5, 6))
+		val actual = 5.doesNotOverlapWithWinningNumbers(listOf(1, 2, 3, 4, 5, 6))
 		assertThat(actual).isEqualTo(BonusError.DUPLICATE_NUMBER)
 	}
 }

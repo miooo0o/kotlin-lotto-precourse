@@ -2,7 +2,7 @@ package lotto.input
 
 import lotto.error.*
 import lotto.policy.GamePolicy
-import lotto.policy.isNotInWinningNumbers
+import lotto.policy.doesNotOverlapWithWinningNumbers
 import lotto.view.InputView
 import lotto.view.input.validateBonusNumber
 import org.junit.jupiter.api.Assertions.*
@@ -77,7 +77,7 @@ class InputViewTest {
 		val input = "${winning[0]}"
 		val exception = assertThrows<RetryInputException> {
 			val bonus = InputView.parseBonusNumberOrThrow(input)
-			val error = bonus.isNotInWinningNumbers(winning)
+			val error = bonus.doesNotOverlapWithWinningNumbers(winning)
 			ExceptionHandler.throwIf(error)
 		}
 		assertTrue(exception.message!!.contains(BonusError.DUPLICATE_NUMBER.toMessage()))

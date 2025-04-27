@@ -12,7 +12,6 @@ fun Long.isDivisibleByTicketPrice(): ErrorType =
 fun Long.isBelowMaxAllowableAmount(): ErrorType =
 	PurchaseError.AMOUNT_TOO_LARGE.takeIf { this > GamePolicy.MAX_ALLOWABLE_AMOUNT } ?: Common.NON_ERROR
 
-
 // String type
 fun String.containsOnlyDigits(): ErrorType =
 	ParseError.INVALID_FORMAT.takeIf { this.any { !it.isDigit() } } ?: Common.NON_ERROR
@@ -36,5 +35,5 @@ fun List<Int>.isInRange(): ErrorType =
 fun Int.isInRange(): ErrorType =
 	BonusError.NOT_IN_RANGE.takeIf { this !in GamePolicy.VALID_NUMBER_RANGE } ?: Common.NON_ERROR
 
-fun Int.isNotInWinningNumbers(winning: List<Int>): ErrorType =
+fun Int.doesNotOverlapWithWinningNumbers(winning: List<Int>): ErrorType =
 	BonusError.DUPLICATE_NUMBER.takeIf { this in winning } ?: Common.NON_ERROR
