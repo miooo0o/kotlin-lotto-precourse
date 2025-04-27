@@ -8,7 +8,7 @@ fun ErrorType.toMessage(): String {
 		is BonusError -> fromBonus(this)
 		is PurchaseError -> fromPurchase(this)
 		is ParseError -> fromParse(this)
-		Common.NON_ERROR -> "no error"
+		Common.NON_ERROR -> "[OK]: Operation completed successfully."
 	}
 }
 
@@ -51,6 +51,6 @@ private fun fromPurchase(type: PurchaseError): String = when (type) {
 }
 
 private fun fromParse(type: ParseError): String = when (type) {
-	ParseError.NULL_FOUND -> "EMPTY_INPUT"
-	ParseError.INVALID_FORMAT -> "INVALID_FORMAT"
+	ParseError.NULL_FOUND -> ErrorTemplate.inputEmpty()
+	ParseError.INVALID_FORMAT -> ErrorTemplate.invalidInputFormat()
 }

@@ -17,4 +17,10 @@ object ErrorTemplate {
 
 	fun invalidPurchaseAmount(ticketPrice: Long) =
 		"${GamePolicy.ERROR_PREFIX} purchase amount must be greater than or equal to $ticketPrice."
+
+	fun inputEmpty(): String =
+		"${GamePolicy.ERROR_PREFIX} Input cannot be empty. Please provide a value."
+
+	fun invalidInputFormat(): String =
+		"${GamePolicy.ERROR_PREFIX} Invalid input format. Please follow the correct format."
 }
