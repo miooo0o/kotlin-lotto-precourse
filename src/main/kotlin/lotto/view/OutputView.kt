@@ -1,6 +1,6 @@
 package lotto.view
 
-import lotto.domain.Lotto
+import lotto.Lotto
 import lotto.domain.Rank
 import lotto.policy.GamePolicy
 import lotto.util.requireOrUnexpected

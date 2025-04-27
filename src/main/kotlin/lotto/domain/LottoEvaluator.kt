@@ -1,5 +1,7 @@
 package lotto.domain
 
+import lotto.Lotto
+
 object LottoEvaluator {
 	fun evaluate(
 		lottoList: List<Lotto>,

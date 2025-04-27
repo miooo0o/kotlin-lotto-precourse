@@ -1,5 +1,6 @@
 package lotto.domain
 
+import lotto.Lotto
 import lotto.error.PurchaseError
 import lotto.error.isStatusSuccess
 import lotto.error.toMessage

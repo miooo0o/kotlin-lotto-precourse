@@ -1,6 +1,6 @@
 package lotto.service
 
-import lotto.domain.Lotto
+import lotto.Lotto
 import lotto.domain.LottoEvaluator
 import lotto.domain.Rank
 
