@@ -4,10 +4,7 @@ import lotto.domain.Lotto
 import lotto.domain.LottoIssuer
 import lotto.policy.GamePolicy
 import lotto.policy.isNotInWinningNumbers
-import lotto.view.InputView
-import lotto.view.OutputView
-import lotto.view.repeatUntilValid
-import lotto.view.viewPurchasedTickets
+import lotto.view.*
 
 object GameService {
 	fun start() {
@@ -19,11 +16,10 @@ object GameService {
 		val winningNumbers = readWinningNumbers()
 		val bonusNumber = readBonusNumber(winningNumbers)
 
-		// Eval Lotto
-		// -> Winning Statistics + "\n" + "---"
-		// -> Matches (...)
-		// -> Total return is (double.0)%.
+		val map = lottoList.evaluateRanks(winningNumbers, bonusNumber)
+		map.displayMatches()
 
+		// -> Total return is (double.0)%.
 	}
 
 	private fun readPurchaseAmount(): Long {
@@ -48,7 +44,7 @@ object GameService {
 			reader = { InputView.parseWinningNumbersOrThrow(it) }
 		)
 		println()
-		return winning
+		return winning.sorted()
 	}
 
 	private fun readBonusNumber(winning: List<Int>): Int {
