@@ -13,3 +13,9 @@ fun List<Lotto>.viewPurchasedTickets() {
 	forEach { it.display() }
 	println()
 }
+
+object OutputView {
+	fun viewPurchasedTickets(lottos: List<Lotto>) {
+		lottos.viewPurchasedTickets()
+	}
+}
