@@ -7,7 +7,7 @@ import lotto.policy.isAtLeastTicketPrice
 import lotto.policy.isBelowMaxAllowableAmount
 import lotto.policy.isDivisibleByTicketPrice
 
-fun parseAmount(input: String): Long? {
+fun parseAmountOrNull(input: String): Long? {
 	return input.toLongOrNull()
 }
 
