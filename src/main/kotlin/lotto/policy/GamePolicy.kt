@@ -10,8 +10,9 @@ package lotto.policy
 object GamePolicy {
 
 	// Ticket Rules
-	const val TICKET_PRICE = 1000L
-	const val MAX_ALLOWABLE_AMOUNT = 2147483647000L
+	const val TICKET_PRICE = 1_000L
+	const val GAME_CURRENCY = "KRW"
+	const val MAX_ALLOWABLE_AMOUNT = 2_147_483_647_000L
 	const val MIN_TICKET_SIZE = 1
 
 	// Lotto Rules
