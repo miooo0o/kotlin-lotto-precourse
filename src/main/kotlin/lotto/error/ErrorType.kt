@@ -27,9 +27,3 @@ enum class PurchaseError : ErrorType {
 	NOT_DIVISIBLE_BY_TICKET_PRICE,
 	AMOUNT_TOO_LARGE
 }
-
-enum class LogicError : ErrorType {
-	INVALID_LOGIC,
-	CONVERSION_FAILED,
-	DEFAULT
-}

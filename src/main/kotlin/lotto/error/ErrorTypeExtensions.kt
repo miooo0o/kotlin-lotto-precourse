@@ -7,7 +7,6 @@ fun ErrorType.toMessage(): String {
 		is WinningError -> fromWinning(this)
 		is BonusError -> fromBonus(this)
 		is PurchaseError -> fromPurchase(this)
-		is LogicError -> fromLogic(this)
 		is ParseError -> fromParse(this)
 		Common.NON_ERROR -> "no error"
 	}
@@ -15,9 +14,6 @@ fun ErrorType.toMessage(): String {
 
 fun ErrorType.isTypeRetry(): Boolean =
 	this is ParseError || this is WinningError || this is BonusError || this is PurchaseError
-
-fun ErrorType.isTypeLogic(): Boolean =
-	this is LogicError
 
 fun ErrorType.isStatusFailure(): Boolean = this != Common.NON_ERROR
 
@@ -54,14 +50,6 @@ private fun fromPurchase(type: PurchaseError): String = when (type) {
 	PurchaseError.AMOUNT_TOO_LARGE -> "Purchase amount is too large to process."
 }
 
-// FIXME: better message
-private fun fromLogic(type: LogicError): String = when (type) {
-	LogicError.DEFAULT -> "DEFAULT"
-	LogicError.INVALID_LOGIC -> "INVALID_LOGIC"
-	LogicError.CONVERSION_FAILED -> "CONVERSION_FAILED"
-}
-
-// FIXME: better message
 private fun fromParse(type: ParseError): String = when (type) {
 	ParseError.NULL_FOUND -> "EMPTY_INPUT"
 	ParseError.INVALID_FORMAT -> "INVALID_FORMAT"

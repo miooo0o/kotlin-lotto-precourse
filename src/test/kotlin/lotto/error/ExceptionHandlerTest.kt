@@ -14,13 +14,6 @@ class ExceptionHandlerTest {
 	}
 
 	@Test
-	fun `should throw UnexpectedException when error is Logic DEFAULT `() {
-		assertThrows<UnexpectedException> {
-			ExceptionHandler.throwIf(LogicError.DEFAULT)
-		}
-	}
-
-	@Test
 	fun `should not throw exception when error is Common NON_ERROR`() {
 		assertDoesNotThrow {
 			ExceptionHandler.throwIf(Common.NON_ERROR)
