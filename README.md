@@ -204,16 +204,13 @@ that the user experience is smooth with continuous retries on invalid input.
 
 - [x] End-to-End Application Flow
 - [x] Validates the entire flow from user input to result display, ensuring that the system behaves correctly in the
-  full
-  cycle.
+  full cycle.
 - [x] Random Number Generation Handling
 - [x] Ensures that random number generation behaves as expected, with no duplicate numbers and all numbers within the
-  valid
-  range.
+  valid range.
 - [x] Error Scenarios and Error Messages
 - [x] Ensures that all invalid inputs (e.g., invalid purchase amount, invalid lotto numbers) trigger the appropriate
-  error
-  messages.
+  error messages.
 
 #### Edge Cases
 
@@ -222,9 +219,7 @@ that the user experience is smooth with continuous retries on invalid input.
 - [x] Ensures that input validation handles these gracefully.
 - [x] Boundary Conditions for Winning Calculations
 - [x] Validates winning calculations at the edges of the rules, ensuring that tickets with 3, 4, 5, or 6 matches (with
-  and
-  without the bonus) are handled correctly.
+  and without the bonus) are handled correctly.
 - [x] Exception Handling Verification
 - [x] Ensures that exceptions are properly thrown for invalid inputs and unexpected scenarios, such as invalid lotto
-  number
-  format or exceeding the maximum ticket purchase limit.
+  number format or exceeding the maximum ticket purchase limit.
