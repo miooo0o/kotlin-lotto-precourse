@@ -9,16 +9,10 @@ import lotto.policy.isAtLeastTicketPrice
 import lotto.policy.isBelowMaxAllowableAmount
 import lotto.policy.isDivisibleByTicketPrice
 
-private fun Long.validateSelf() {
-	require(isAtLeastTicketPrice().isStatusSuccess()) { PurchaseError.CANNOT_AFFORD_TICKET.toMessage() }
-	require(isDivisibleByTicketPrice().isStatusSuccess()) { PurchaseError.NOT_DIVISIBLE_BY_TICKET_PRICE.toMessage() }
-	require(isBelowMaxAllowableAmount().isStatusSuccess()) { PurchaseError.AMOUNT_TOO_LARGE.toMessage() }
-
-}
 
 class LottoIssuer(private val amount: Long) {
 	init {
-		amount.validateSelf()
+		validateIssuer()
 	}
 
 	val ticketCount: Int
@@ -27,6 +21,18 @@ class LottoIssuer(private val amount: Long) {
 	fun issue(): List<Lotto> {
 		return List(ticketCount) {
 			Lotto(LottoNumbers.generate())
+		}
+	}
+
+	private fun validateIssuer() {
+		require(amount.isAtLeastTicketPrice().isStatusSuccess()) {
+			PurchaseError.CANNOT_AFFORD_TICKET.toMessage()
+		}
+		require(
+			amount.isDivisibleByTicketPrice().isStatusSuccess()
+		) { PurchaseError.NOT_DIVISIBLE_BY_TICKET_PRICE.toMessage() }
+		require(amount.isBelowMaxAllowableAmount().isStatusSuccess()) {
+			PurchaseError.AMOUNT_TOO_LARGE.toMessage()
 		}
 	}
 }
