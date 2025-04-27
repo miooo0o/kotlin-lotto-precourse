@@ -7,13 +7,23 @@ import lotto.policy.hasNoDuplicates
 import lotto.policy.hasValidSize
 import lotto.policy.isInRange
 
-class Lotto(private val numbers: List<Int>) {
+class Lotto(numbers: List<Int>) {
+	private val ticketNumbers: List<Int> = numbers.sorted()
+
 	init {
-		numbers.validateSelf()
+		this.ticketNumbers.validateSelf()
 	}
 
 	fun display() {
-		println(numbers.joinToString(prefix = "[", postfix = "]"))
+		println(ticketNumbers.joinToString(prefix = "[", postfix = "]"))
+	}
+
+	fun countMatched(winningNumbers: List<Int>): Int {
+		return ticketNumbers.count { it in winningNumbers }
+	}
+
+	fun contains(bonusNumber: Int): Boolean {
+		return ticketNumbers.contains(bonusNumber)
 	}
 }
 
