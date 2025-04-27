@@ -82,19 +82,4 @@ class InputViewTest {
 		}
 		assertTrue(exception.message!!.contains(BonusError.DUPLICATE_NUMBER.toMessage()))
 	}
-
-//	@Test
-//	fun `should throw exception for amount not divisible by ticket price`()
-//
-//	@Test
-//	fun `should throw exception for amount lower than ticket price`()
-//
-//	@Test
-//	fun `should throw exception for empty winning number input`()
-//
-//	@Test
-//	fun `should parse valid bonus number`()
-//
-//	@Test
-//	fun `should parse valid amount`()
 }
