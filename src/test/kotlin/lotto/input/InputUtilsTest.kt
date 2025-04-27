@@ -36,10 +36,13 @@ class InputUtilsTest : NsTest() {
 		assertSimpleTest {
 			run(INVALID_WINNING_NUMBERS_DUPLICATE, VALID_WINNING_NUMBERS)
 			var callCount = 0
-			val result = repeatUntilValid(GamePolicy.WINNING_MESSAGE) {
-				callCount++
-				InputView.parseWinningNumbersOrThrow(it)
-			}
+			val result = repeatUntilValid(
+				prompt = GamePolicy.WINNING_MESSAGE,
+				reader = {
+					callCount++
+					InputView.parseWinningNumbersOrThrow(it)
+				}
+			)
 			assertThat(callCount).isEqualTo(2)
 			assertThat(output()).contains(WinningError.DUPLICATE_NUMBER.toMessage())
 			assertThat(result).containsExactlyElementsOf(
@@ -52,7 +55,12 @@ class InputUtilsTest : NsTest() {
 	fun `valid purchase amount input should pass without exception`() {
 		assertDoesNotThrow {
 			run(VALID_PURCHASE_AMOUNT)
-			repeatUntilValid(GamePolicy.AMOUNT_MESSAGE) { InputView.parseAmountOrThrow(it) }
+			repeatUntilValid(
+				prompt = GamePolicy.AMOUNT_MESSAGE,
+				reader = {
+					InputView.parseAmountOrThrow(it)
+				}
+			)
 		}
 	}
 
