@@ -15,7 +15,7 @@ fun List<Lotto>.viewPurchasedTickets() {
 }
 
 object OutputView {
-	fun viewPurchasedTickets(lottos: List<Lotto>) {
-		lottos.viewPurchasedTickets()
+	fun viewPurchasedTickets(lottoList: List<Lotto>) {
+		lottoList.viewPurchasedTickets()
 	}
 }
