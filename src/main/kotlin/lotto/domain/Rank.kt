@@ -2,7 +2,11 @@ package lotto.domain
 
 import lotto.error.UnexpectedException
 
-enum class Rank(val matchCount: Int, val prize: Int, val needsBonus: Boolean = false) {
+enum class Rank(
+	val matchCount: Int,
+	val prize: Int,
+	val needsBonus: Boolean = false
+) {
 	FIRST(6, 2_000_000_000),
 	SECOND(5, 30_000_000, needsBonus = true),
 	THIRD(5, 1_500_000),
