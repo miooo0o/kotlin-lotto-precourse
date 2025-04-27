@@ -1,5 +1,7 @@
 package lotto.domain
 
+import lotto.error.UnexpectedException
+
 enum class Rank(val matchCount: Int, val prize: Int, val needsBonus: Boolean = false) {
 	FIRST(6, 2_000_000_000),
 	SECOND(5, 30_000_000, needsBonus = true),
@@ -16,7 +18,8 @@ enum class Rank(val matchCount: Int, val prize: Int, val needsBonus: Boolean = f
 				matchedCount == 5 -> THIRD
 				matchedCount == 4 -> FOURTH
 				matchedCount == 3 -> FIFTH
-				else -> NONE
+				matchedCount < 3 -> NONE
+				else -> throw UnexpectedException("Invalid match count: $matchedCount")
 			}
 		}
 	}
