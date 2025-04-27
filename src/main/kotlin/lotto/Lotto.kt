@@ -13,8 +13,6 @@ class Lotto(private val numbers: List<Int>) {
 		validateNumbers(numbers)
 	}
 
-	fun getNumbers() = numbers
-
 	fun display() {
 		println(numbers.joinToString(prefix = "[", postfix = "]"))
 	}
