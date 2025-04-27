@@ -28,6 +28,7 @@ object InputView {
 		validate: (T) -> ErrorType,
 	): T {
 		val notNullInput = input.validateOrThrow {
+			@Suppress("ConstantConditionIf")
 			if (it == null) ParseError.NULL_FOUND else Common.NON_ERROR
 		}
 		val parsed = parse(notNullInput)

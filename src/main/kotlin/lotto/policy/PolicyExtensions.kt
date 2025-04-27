@@ -3,12 +3,14 @@ package lotto.policy
 import lotto.error.*
 
 // Long Type
+@Suppress("ConstantConditionIf")
 fun Long.isAtLeastTicketPrice(): ErrorType =
 	PurchaseError.CANNOT_AFFORD_TICKET.takeIf { this < GamePolicy.TICKET_PRICE } ?: Common.NON_ERROR
 
 fun Long.isDivisibleByTicketPrice(): ErrorType =
 	PurchaseError.NOT_DIVISIBLE_BY_TICKET_PRICE.takeIf { this % GamePolicy.TICKET_PRICE != 0L } ?: Common.NON_ERROR
 
+@Suppress("ConstantConditionIf")
 fun Long.isBelowMaxAllowableAmount(): ErrorType =
 	PurchaseError.AMOUNT_TOO_LARGE.takeIf { this > GamePolicy.MAX_ALLOWABLE_AMOUNT } ?: Common.NON_ERROR
 
