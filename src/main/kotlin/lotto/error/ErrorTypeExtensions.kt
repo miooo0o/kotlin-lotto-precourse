@@ -8,6 +8,7 @@ fun ErrorType.toMessage(): String {
 		is BonusError -> fromBonus(this)
 		is PurchaseError -> fromPurchase(this)
 		is ParseError -> fromParse(this)
+		is LottoError -> "${GamePolicy.ERROR_PREFIX} Lotto numbers must be sorted."
 		Common.NON_ERROR -> "[OK]: Operation completed successfully."
 	}
 }

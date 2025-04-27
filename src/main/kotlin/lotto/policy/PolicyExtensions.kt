@@ -33,6 +33,9 @@ fun List<Int>.hasNoDuplicates(): ErrorType =
 fun List<Int>.isInRange(): ErrorType =
 	WinningError.NOT_IN_RANGE.takeIf { this.any { it !in GamePolicy.VALID_NUMBER_RANGE } } ?: Common.NON_ERROR
 
+fun List<Int>.isSorted(): ErrorType =
+	LottoError.NOT_SORTED.takeIf { this != this.sorted() } ?: Common.NON_ERROR
+
 // Int type
 fun Int.isInRange(): ErrorType =
 	BonusError.NOT_IN_RANGE.takeIf { this !in GamePolicy.VALID_NUMBER_RANGE } ?: Common.NON_ERROR

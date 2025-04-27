@@ -1,9 +1,11 @@
 package lotto
 
 import lotto.error.isStatusFailure
+import lotto.error.isStatusSuccess
 import lotto.policy.hasNoDuplicates
 import lotto.policy.hasValidSize
 import lotto.policy.isInRange
+import lotto.policy.isSorted
 
 class Lotto(private val numbers: List<Int>) {
 	init {
@@ -33,6 +35,7 @@ class Lotto(private val numbers: List<Int>) {
 				numbers.isInRange()
 			).firstOrNull { it.isStatusFailure() }
 			require(error == null) { "Lotto validation failed" }
+			require(numbers.isSorted().isStatusSuccess()) { "Lotto numbers must be sorted in ascending order" }
 		}
 	}
 }

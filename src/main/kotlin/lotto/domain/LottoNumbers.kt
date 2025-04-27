@@ -9,6 +9,6 @@ object LottoNumbers {
 			GamePolicy.LOTTO_MIN_NUMBER,
 			GamePolicy.LOTTO_MAX_NUMBER,
 			GamePolicy.LOTTO_SIZE
-		)
+		).sorted()
 	}
 }
