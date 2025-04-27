@@ -1,5 +1,6 @@
 package lotto
 
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -48,5 +49,33 @@ class LottoTest {
 		assertThrows<IllegalArgumentException> {
 			Lotto(listOf(2, 2, 2, 2, 2, 2))
 		}
+	}
+
+	@Test
+	fun `countMatched should return correct number of matching winning numbers`() {
+		val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+		val winningNumbers = listOf(1, 2, 7, 8, 9, 10)
+
+		val matchedCount = lotto.countMatched(winningNumbers)
+		assertEquals(2, matchedCount)
+	}
+
+	@Test
+	fun `contains should return true if bonus number is included`() {
+
+		val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+		val bonusNumber = 6
+
+		val result = lotto.contains(bonusNumber)
+		assertTrue(result)
+	}
+
+	@Test
+	fun `contains should return false if bonus number is not included`() {
+		val lotto = Lotto(listOf(1, 2, 3, 4, 5, 6))
+		val bonusNumber = 10
+
+		val result = lotto.contains(bonusNumber)
+		assertFalse(result)
 	}
 }
