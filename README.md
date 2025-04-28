@@ -138,7 +138,6 @@ that the user experience is smooth with continuous retries on invalid input.
 - [x] Validate numbers are within range (1-45)
 - [x] Validate numbers have no duplicates
 - [x] Validate bonus number is not among winning numbers
-- [x] Move logic functions out of `LottoPolicy` into `Validator`
 - [x] Create error → message mapper for consistent `[ERROR]: ...` output
 
 #### Error Handling
