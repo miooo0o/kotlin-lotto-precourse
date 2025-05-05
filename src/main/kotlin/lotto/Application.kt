@@ -1,18 +1,19 @@
 package lotto
 
-import lotto.error.UnexpectedException
-import lotto.service.GameService
-import lotto.view.OutputView
-
 fun main() {
+	val amount = InputView.read(AmountUntil())
+	val lottoMachine = LottoMachine()
+	val listOfLotto = lottoMachine.asMuch(amount)
+	OutputView.displayListOfLotto(listOfLotto)
+
+	val winningNumbers = InputView.read(WinningNumberUntil())
+	val bonusNumber = InputView.read(BonusUntil(), winningNumbers)
+
 	try {
-		val gameResult = GameService.start()
-		GameService.show(gameResult)
-	} catch (e: UnexpectedException) {
-		OutputView.displayErrorMessage("An unexpected error occurred", e)
-		return
-	} catch (e: Exception) {
-		OutputView.displayErrorMessage("Something went wrong", e)
-		return
+		val result = Analyze.result(listOfLotto, winningNumbers, bonusNumber)
+		OutputView.displayResults(result, amount)
+
+	} catch (e: IllegalArgumentException) {
+		println("[ERROR]: ${e.message}")
 	}
 }
