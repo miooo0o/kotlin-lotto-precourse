@@ -51,7 +51,6 @@ class BonusUntil : ReadUntil<Int> {
 	}
 }
 
-
 class AmountUntil : ReadUntil<Long> {
 	override fun ask() {
 		println("Please enter the purchase amount.")
