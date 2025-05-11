@@ -78,7 +78,7 @@ Development Approach
 ### Architecture
 
 ```text
-lotto/
+box/
 ├── domain/                     # Core business logic and entities
 │   ├── Lotto.kt                # Represents a lottery ticket with validation logic
 │   ├── LottoIssuer.kt          # Manages ticket issuance based on purchase amount
@@ -161,9 +161,9 @@ that the user experience is smooth with continuous retries on invalid input.
 
 #### Lotto Generation
 
-- [x] Generate lotto tickets based on purchase amount
+- [x] Generate box tickets based on purchase amount
 - [x] Create random numbers for each ticket
-- [x] Sort lotto numbers in ascending order
+- [x] Sort box numbers in ascending order
 - [x] Display purchased tickets
 
 #### Winner Calculation
@@ -191,7 +191,7 @@ that the user experience is smooth with continuous retries on invalid input.
 #### Domain Tests
 
 - [x] Lotto Validation
-- [x] Number count validation (Ensures the lotto has exactly 6 numbers)
+- [x] Number count validation (Ensures the box has exactly 6 numbers)
 - [x] Duplicate number detection (Ensures no duplicates in a single ticket)
 - [x] Range validation (Ensures all numbers are within valid range)
 - [x] LottoEvaluator Ranking Accuracy
@@ -208,7 +208,7 @@ that the user experience is smooth with continuous retries on invalid input.
 - [x] Ensures that random number generation behaves as expected, with no duplicate numbers and all numbers within the
   valid range.
 - [x] Error Scenarios and Error Messages
-- [x] Ensures that all invalid inputs (e.g., invalid purchase amount, invalid lotto numbers) trigger the appropriate
+- [x] Ensures that all invalid inputs (e.g., invalid purchase amount, invalid box numbers) trigger the appropriate
   error messages.
 
 #### Edge Cases
@@ -220,5 +220,5 @@ that the user experience is smooth with continuous retries on invalid input.
 - [x] Validates winning calculations at the edges of the rules, ensuring that tickets with 3, 4, 5, or 6 matches (with
   and without the bonus) are handled correctly.
 - [x] Exception Handling Verification
-- [x] Ensures that exceptions are properly thrown for invalid inputs and unexpected scenarios, such as invalid lotto
+- [x] Ensures that exceptions are properly thrown for invalid inputs and unexpected scenarios, such as invalid box
   number format or exceeding the maximum ticket purchase limit.
